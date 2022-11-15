@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,8 +11,66 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css"></script>
     <title>HangMan Game</title>
 </head>
+
 <body>
-    
+    <div id="background" class="container">
+        <h1>HangMan Game</h1>
+        <div id="jeu">
+            <div class="instruction">
+                Cliquer sur les lettres pour dévoiler le mot !!
+            </div>
+            <div id="colonne_grille">
+                <div id="colonne_gauche" >
+                    <img id="pendu" src="images/pendu_defaut.png" alt="image pendu" />
+                </div>
+                <div id="colonne_droite">
+                    <div id="indice">
+                        Indication :<br /><strong>Indice pour le mot à trouver</strong>
+                    </div>
+                    
+                    <div id="score">
+                        Votre score : <strong>10 / 10</strong>
+                    </div>
+                    <button class="bubbly-button">Nouvelle partie !</button>
+                </div>
+            </div>
+            <section id="clavier">
+            <div id="lettre_grille">
+                <span class="lettre">A</span>
+                <span class="lettre">B</span>
+                <span class="lettre">C</span>
+                <span class="lettre">D</span>
+                <span class="lettre">E</span>
+                <span class="lettre">F</span>
+                <span class="lettre">G</span>
+                <span class="lettre">H</span>
+                <span class="lettre">I</span>
+                <span class="lettre">J</span>
+                <span class="lettre">K</span>
+                <span class="lettre">L</span>
+                <span class="lettre">M</span>
+                <span class="lettre">N</span>
+                <span class="lettre">O</span>
+                <span class="lettre">P</span>
+                <span class="lettre">Q</span>
+                <span class="lettre">R</span>
+                <span class="lettre">S</span>
+                <span class="lettre">T</span>
+                <span class="lettre">U</span>
+                <span class="lettre">V</span>
+                <span class="lettre">W</span>
+                <span class="lettre">X</span>
+                <span class="lettre">Y</span>
+                <span class="lettre">Z</span>
+             </div>
+                <div id="mot">
+                    Mot à trouver
+                </div>
+           </section>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
+
 </html>

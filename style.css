@@ -1,3 +1,196 @@
-body{
-    background-color: #182029;
+/* Police */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
+
+/* HTML */
+
+body {
+    background-image: url('images/background.jpg');
+    background-repeat: no-repeat;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    min-width: 425px;
+}
+
+h1 {
+    text-align: center;
+    color: #fff;
+    font-size: 3rem;
+    text-decoration: underline;
+    margin: 0;
+}
+
+img {
+    height: 200px;
+}
+
+#background {
+    margin-top: 50px;
+    background-color: rgb(24, 32, 41, .7);
+    width: 1000px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+#colonne_grille {
+	display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    justify-items: center;
+    margin: 30px;
+    
+}
+#colonne_gauche {
+    background-color: rgb(255, 255, 255, .8);
+    padding: 60px;
+    border: 1px solid #182029;
+    border-radius: 10px;
+}
+#colonne_droite {
+    background-color: rgb(255, 255, 255, .8);
+    padding: 60px;
+    border: 1px solid #182029;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+    line-height: 2rem;
+}
+
+#clavier {
+    background-color: rgb(24, 32, 41, .8);
+    border: 1px solid #fff;
+    margin: 30px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+#lettre_grille {
+    display: grid;
+    grid-template-columns: repeat(13, 1fr);
+    align-items: center;
+    justify-items: stretch;
+}
+
+#mot {
+    text-align: center;
+    font-size: 30px;
+    padding-top: 10px;
+    color:#fff;
+}
+
+.lettre {
+    background-color: #fff;
+    border: 1px solid #182029;
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: bold;
+    margin: 10PX;
+    text-align: center;
+}
+.lettre:hover {
+    background-color: #d35b20;
+    color: #fff;
+    transform: scale(1.2);
+    border: none;
+    cursor: pointer;
+}
+
+.container {
+    width: 1500px;
+    margin: 0 auto;
+}
+
+.instruction {
+    color:#fff;
+    text-align: center;
+    font-size: 1.5rem;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 30px;
+    background-color: rgb(24, 32, 41, .8);
+}
+
+/* css button */
+
+.bubbly-button {
+    display: inline-block;
+    font-size: 1em;
+    padding: 1em 2em;
+    margin-top: 20px;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #d35b20;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+    box-shadow: 0 2px 25px #dd4b02cb;
+}
+.bubbly-button:focus {
+    outline: 0;
+}
+.bubbly-button:before, .bubbly-button:after {
+    position: absolute;
+    content: '';
+    display: block;
+    width: 140%;
+    height: 100%;
+    left: -20%;
+    z-index: -1000;
+    transition: all ease-in-out 0.5s;
+    background-repeat: no-repeat;
+}
+.bubbly-button:before {
+    display: none;
+    top: -75%;
+    background-image: radial-gradient(circle, #d35b20 20%, transparent 20%), radial-gradient(circle, transparent 20%, #d35b20 20%, transparent 30%), radial-gradient(circle, #d35b20 20%, transparent 20%), radial-gradient(circle, #d35b20 20%, transparent 20%), radial-gradient(circle, transparent 10%, #d35b20 15%, transparent 20%), radial-gradient(circle, #d35b20 20%, transparent 20%), radial-gradient(circle, #d35b20 20%, transparent 20%), radial-gradient(circle, #d35b20 20%, transparent 20%), radial-gradient(circle, #d35b20 20%, transparent 20%);
+    background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%, 10% 10%, 18% 18%;
+}
+.bubbly-button:after {
+    display: none;
+    bottom: -75%;
+    background-image: radial-gradient(circle, #d35b20 20%, transparent 20%), radial-gradient(circle, #d35b20 20%, transparent 20%), radial-gradient(circle, transparent 10%, #d35b20 15%, transparent 20%), radial-gradient(circle, #d35b20 20%, transparent 20%), radial-gradient(circle, #d35b20 20%, transparent 20%), radial-gradient(circle, #d35b20 20%, transparent 20%), radial-gradient(circle, #d35b20 20%, transparent 20%);
+    background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%, 20% 20%;
+}
+.bubbly-button:active {
+    transform: scale(0.9);
+    background-color: #c44f15;
+    box-shadow: 0 2px 25px rgba(255, 84, 0, 0.2);
+}
+.bubbly-button.animate:before {
+    display: block;
+    animation: topBubbles ease-in-out 0.75s forwards;
+}
+.bubbly-button.animate:after {
+    display: block;
+    animation: bottomBubbles ease-in-out 0.75s forwards;
+}
+@keyframes topBubbles {
+    0% {
+        background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%, 40% 90%, 55% 90%, 70% 90%;
+   }
+    50% {
+        background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%, 50% 50%, 65% 20%, 90% 30%;
+   }
+    100% {
+        background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%, 50% 40%, 65% 10%, 90% 20%;
+        background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+   }
+}
+@keyframes bottomBubbles {
+    0% {
+        background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
+   }
+    50% {
+        background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
+   }
+    100% {
+        background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
+        background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+   }
 }
