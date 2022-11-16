@@ -22,11 +22,11 @@ h1 {
 }
 
 img {
-    height: 200px;
+    height: 350px;
 }
 
 #background {
-    margin-top: 50px;
+    margin-top: 20px;
     background-color: rgb(24, 32, 41, .7);
     width: 1000px;
     border-radius: 10px;
@@ -43,7 +43,7 @@ img {
 }
 #colonne_gauche {
     background-color: rgb(255, 255, 255, .8);
-    padding: 60px;
+    padding: 20px;
     border: 1px solid #182029;
     border-radius: 10px;
 }
@@ -95,6 +95,14 @@ img {
     border: none;
     cursor: pointer;
 }
+.click {
+    background-color: #d35b20;
+    color: #fff;
+    transform: scale(1.2);
+    border: none;
+    cursor: pointer;
+}
+
 
 .container {
     width: 1500px;
