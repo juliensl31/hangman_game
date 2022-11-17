@@ -18,13 +18,13 @@ var animateButton = function(e) {
   }
 
   // jeu
-
+  let fin = true;
   let lettre = document.querySelector('.lettre');
   let indice = document.querySelector('#indice');
   let score = document.querySelector('#score');
   let motATrouver = document.querySelector('#mot');
   let demarrer = document.querySelector('#partie');
-  let hidden = true;
+  
   score.textContent = '';
   
 let dernier   = 0;
@@ -50,30 +50,33 @@ let mots = [
   ["ORANGE", "FRUITS"],
 ];
 
+
+
 function genererNombreEntier(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
+function demarrerPartie() {
 demarrer.addEventListener('click', () => {
   do {
     nombreAleatoire = genererNombreEntier(mots.length);
   } while (nombreAleatoire == dernier)
- 
-  motATrouver.textContent = mots[nombreAleatoire][0];
+  
+  let str = "";
+  str = mots[nombreAleatoire][0];
+  // console.log(str);
+  str = str.toUpperCase().replace(/[A-Z]/g, " _ ");
+  
+  motATrouver.textContent = str;
   indice.textContent   = mots[nombreAleatoire][1];
   dernier              = nombreAleatoire;
-
-  if (hidden) {
-    motATrouver.textContent = " _ _ _ _ _ _ _";
-    hidden = false;
-  } else {
-    
-    hidden = true;
-  }
+  
+ 
 });
+};
 
-
-
-  lettre.addEventListener('click', () => {
+  lettre.addEventListener('click', (lettre) => {
     console.log(lettre);
   });
+
+  demarrerPartie();
