@@ -1,33 +1,36 @@
 // button
-var animateButton = function(e) {
+var animateButton = function (e) {
 
-    e.preventDefault;
-    //reset animation
+  e.preventDefault;
+  //reset animation
+  e.target.classList.remove('animate');
+
+  e.target.classList.add('animate');
+  setTimeout(function () {
     e.target.classList.remove('animate');
-    
-    e.target.classList.add('animate');
-    setTimeout(function(){
-      e.target.classList.remove('animate');
-    },700);
-  };
-  
-  var bubblyButtons = document.getElementsByClassName("bubbly-button");
-  
-  for (var i = 0; i < bubblyButtons.length; i++) {
-    bubblyButtons[i].addEventListener('click', animateButton, false);
-  }
+  }, 700);
+};
 
-  // jeu
-  let fin = true;
-  let lettre = document.querySelector('.lettre');
-  let indice = document.querySelector('#indice');
-  let score = document.querySelector('#score');
-  let motATrouver = document.querySelector('#mot');
-  let demarrer = document.querySelector('#partie');
-  
-  score.textContent = '';
-  
-let dernier   = 0;
+var bubblyButtons = document.getElementsByClassName("bubbly-button");
+
+for (var i = 0; i < bubblyButtons.length; i++) {
+  bubblyButtons[i].addEventListener('click', animateButton, false);
+}
+
+// jeu
+let fin = true;
+let listeLettre = document.getElementsByClassName('lettre');
+let indice = document.querySelector('#indice');
+let score = document.querySelector('#score');
+let motATrouver = document.querySelector('#mot');
+let demarrer = document.querySelector('#partie');
+
+listeLettre.forEach(lettre => console.log(lettre));
+
+score.textContent = '';
+score = 0;
+
+let dernier = 0;
 let nombreAleatoire = 0;
 let mots = [
   ["BASEBALL", "SPORT"],
@@ -51,32 +54,29 @@ let mots = [
 ];
 
 
-
 function genererNombreEntier(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
 function demarrerPartie() {
-demarrer.addEventListener('click', () => {
-  do {
-    nombreAleatoire = genererNombreEntier(mots.length);
-  } while (nombreAleatoire == dernier)
-  
-  let str = "";
-  str = mots[nombreAleatoire][0];
-  // console.log(str);
-  str = str.toUpperCase().replace(/[A-Z]/g, " _ ");
-  
-  motATrouver.textContent = str;
-  indice.textContent   = mots[nombreAleatoire][1];
-  dernier              = nombreAleatoire;
-  
- 
-});
+  demarrer.addEventListener('click', () => {
+    do {
+      nombreAleatoire = genererNombreEntier(mots.length);
+    } while (nombreAleatoire == dernier)
+
+    let str = "";
+    str = mots[nombreAleatoire][0];
+    // console.log(str);
+    str = str.toUpperCase().replace(/[A-Z]/g, " _ ");
+
+    motATrouver.textContent = str;
+    indice.textContent = mots[nombreAleatoire][1];
+    dernier = nombreAleatoire;
+  });
 };
 
-  lettre.addEventListener('click', (lettre) => {
-    console.log(lettre);
-  });
+lettre.addEventListener('click', () => {
+  
+})
 
-  demarrerPartie();
+demarrerPartie();
