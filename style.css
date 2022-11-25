@@ -87,6 +87,7 @@ img {
     font-weight: bold;
     margin: 10PX;
     text-align: center;
+    text-transform: uppercase;
 }
 .lettre:hover {
     background-color: #d35b20;
@@ -119,6 +120,17 @@ img {
     padding-bottom: 20px;
     margin: 30px;
     background-color: rgb(24, 32, 41, .8);
+}
+
+.btn {
+    color: #fff;
+    background-color: #d35b20;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    margin-top: 10px;
+    transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
+    box-shadow: 0 2px 25px #dd4b02cb;
 }
 
 /* css button */
