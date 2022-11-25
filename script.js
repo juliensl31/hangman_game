@@ -1,5 +1,5 @@
-// button
-var animateButton = function (e) {
+// Animation bouton nouvelle partie
+var animateButton = (e) => {
 
   e.preventDefault;
   //reset animation
@@ -19,26 +19,25 @@ for (var i = 0; i < bubblyButtons.length; i++) {
 
 // jeu
 
-let listeLettre   = document.getElementsByClassName('lettre');
-let indice        = document.querySelector('#indice');
-let motATrouver   = document.querySelector('#mot');
-let demarrer      = document.querySelector('#partie');
-let formulaire    = document.querySelector('#formulaire');
-let error         = document.querySelector('small');
-let input         = document.querySelector('#devine');
-let pendu         = document.getElementById('pendu');
+let alphabet = [].slice.call(document.getElementsByClassName('lettre'));
+let indice = document.querySelector('#indice');
+let motATrouver = document.querySelector('#mot');
+let demarrer = document.querySelector('#partie');
+let formulaire = document.querySelector('#formulaire');
+let input = document.querySelector('#devine');
+let pendu = document.getElementById('pendu');
 
 
-let str     = "";
-let element = "";
-//let lettres = "";
-//let lettresAttendues = element;
-let erreur  = 0;
-let restart = false;
-let score   = 0;
-
+let str = "";
+let element = [];
+let mauvaisesLettres = [ ];
+let lettresAttendues = element;
+let erreur = 0;
 let dernier = 0;
 let nombreAleatoire = 0;
+let nbrTentative = 6;
+//let score           = 0;
+
 let mots = [
   ["baseball", "SPORT"],
   ["tennis", "SPORT"],
@@ -55,7 +54,7 @@ let mots = [
   ["pomme", "FRUITS"],
   ["fraise", "FRUITS"],
   ["banane", "FRUITS"],
-  ["aricot", "FRUITS"],
+  ["abricot", "FRUITS"],
   ["raisin", "FRUITS"],
   ["orange", "FRUITS"],
 ];
@@ -78,15 +77,54 @@ function nouvellePartie() {
   pendu.src = "images/pendu.png";
 
   for (var i = 0; i < str.length; i++) {
-    element = str[i];
-    console.log(element);
+      element.push(str[i]);
+    }
+
+  trouverMot();
+};
+
+
+ for (let i = 0, lettres; lettres = alphabet[i]; i++) {
+  alphabet[i].addEventListener('click', () => {
+      if (alphabet[i].firstChild.nodeValue == lettresAttendues) {
+        alert('good')
+      } else {
+        gameOver();
+      }
+      //console.log([alphabet[i].firstChild.nodeValue]);
+    });
+}
+
+
+function trouverMot() {
+ 
+for (; mauvaisesLettres.length < nbrTentative && lettresAttendues.length > 0; ) {
+  // console.log('lettres à trouver:', lettresAttendues);
+  // alert('Lettres à trouver: ' + lettresAttendues.length + '. '
+  //   + 'Tentatives restantes: ' + (nbrTentative - mauvaisesLettres.length));
+  // var lettre = prompt('Devinez une lettre');
+  var lettre = prompt('Devinez une lettre');
+  var choix = lettresAttendues.indexOf(lettre);
+  if (choix != -1) {
+    lettresAttendues.splice(choix, 1); // retire la 1ère occurrence de cette lettre trouvée dans le tableau
+    alert('Bonne pioche! Continuez!');
+  } else {
+    mauvaisesLettres.push(lettre);
+    alert('Le mot à trouver ne contient pas la lettre ' + lettre + ', désolé...');
   }
+}
+if (lettresAttendues.length == 0) {
+  alert('Bravo, vous avez trouvé le mot !');
+} else if (mauvaisesLettres.length == nbrTentative) {
+  alert('Perdu... Faites une autre partie !');
+}
+
 };
 
 function gameOver() {
-  restart = confirm("C'est perdu !!\nSouhaitez-vous recommencer une partie ?");
+  confirm("C'est perdu !!\nSouhaitez-vous recommencer une partie ?");
   document.location.reload();
-}
+};
 
 function echec() {
   do {
@@ -155,41 +193,5 @@ formulaire.addEventListener('submit', (e) => {
   }
 });
 
-
-
-for (var i = 0; i < listeLettre.length; i++) {
-  const lettres = listeLettre[i];
-  
-  listeLettre[i].addEventListener('click', () => {
-  console.log(lettres);
-  
-  });
-}
-
-/* var MAX_TENTATIVES = 6;
-var mauvaisesLettres = [ ]; // sera complété pendant le jeu
-var lettresAttendues = str[i];
-for (; mauvaisesLettres.length < MAX_TENTATIVES && lettresAttendues.length > 0; ) {
-  console.log('lettres à trouver:', lettresAttendues);
-  alert('Lettres à trouver: ' + lettresAttendues.length + '. '
-    + 'Tentatives restantes: ' + (MAX_TENTATIVES - mauvaisesLettres.length));
-  var lettre = prompt('Devinez une lettre');
-  var indice = lettresAttendues.indexOf(lettre);
-  if (indice != -1) {
-    lettresAttendues.splice(indice, 1); // retire la 1ère occurrence de cette lettre trouvée dans le tableau
-    alert('Bonne pioche! Continuez!');
-  } else {
-    mauvaisesLettres.push(lettre);
-    alert('Le mot à trouver ne contient pas la lettre ' + lettre + ', désolé...');
-  }
-}
-if (lettresAttendues.length == 0) {
-  alert('Bravo, vous avez trouvé le mot !');
-} else if (mauvaisesLettres.length == MAX_TENTATIVES) {
-  alert('Perdu... Faites une autre partie !');
-} */
-
-
-//demarrerPartie();
 
 
