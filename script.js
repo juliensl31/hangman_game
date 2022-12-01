@@ -1,42 +1,18 @@
-// Animation bouton nouvelle partie
-var animateButton = (e) => {
-
-  e.preventDefault;
-  //reset animation
-  e.target.classList.remove('animate');
-
-  e.target.classList.add('animate');
-  setTimeout(function () {
-    e.target.classList.remove('animate');
-  }, 700);
-};
-
-var bubblyButtons = document.getElementsByClassName("bubbly-button");
-
-for (var i = 0; i < bubblyButtons.length; i++) {
-  bubblyButtons[i].addEventListener('click', animateButton, false);
-}
-
-// jeu
-
+"use strict";
 let alphabet = [].slice.call(document.getElementsByClassName('lettre'));
 let indice = document.querySelector('#indice');
-let motATrouver = document.querySelector('#mot');
 let demarrer = document.querySelector('#partie');
 let formulaire = document.querySelector('#formulaire');
 let input = document.querySelector('#devine');
 let pendu = document.getElementById('pendu');
 
-
-let str = "";
-let element = [];
-let mauvaisesLettres = [ ];
-let lettresAttendues = element;
+let stockageMot = [];
+let leMot = [];
+let lettresAttendues = [];
+let lettreChoisie = "";
 let erreur = 0;
 let dernier = 0;
 let nombreAleatoire = 0;
-let nbrTentative = 6;
-//let score           = 0;
 
 let mots = [
   ["baseball", "SPORT"],
@@ -57,68 +33,54 @@ let mots = [
   ["abricot", "FRUITS"],
   ["raisin", "FRUITS"],
   ["orange", "FRUITS"],
+  ["renault", "MARQUE DE VOITURE"],
+  ["peugeot", "MARQUE DE VOITURE"],
+  ["ferrari", "MARQUE DE VOITURE"],
+  ["lamborghini", "MARQUE DE VOITURE"],
+  ["citroen", "MARQUE DE VOITURE"],
+  ["porsche", "MARQUE DE VOITURE"],
 ];
+
+function init() {
+  erreur = 0;
+  lettresAttendues = [];
+  pendu.src = "images/pendu.png";
+  
+  nouvellePartie();
+};
 
 function genererNombreEntier(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
 function nouvellePartie() {
-  erreur = 0;
   do {
     nombreAleatoire = genererNombreEntier(mots.length);
   } while (nombreAleatoire == dernier)
 
-  str = mots[nombreAleatoire][0];
-  console.log(str);
+  leMot = mots[nombreAleatoire][0];
   indice.textContent = mots[nombreAleatoire][1];
   dernier = nombreAleatoire;
-  motATrouver.textContent = str.replace(/[a-z]/g, " _ ");
-  pendu.src = "images/pendu.png";
 
-  for (var i = 0; i < str.length; i++) {
-      element.push(str[i]);
-    }
-
-  trouverMot();
+  for (var i = 0; i < leMot.length; i++) {
+    lettresAttendues.push(leMot[i]);
+  }
+  stockageMot = leMot;
+  console.log(lettresAttendues);
+  demarrer.style.display = 'none';
+  masquerMot();
+  jeu();
+  submit();
 };
 
-
- for (let i = 0, lettres; lettres = alphabet[i]; i++) {
-  alphabet[i].addEventListener('click', () => {
-      if (alphabet[i].firstChild.nodeValue == lettresAttendues) {
-        alert('good')
-      } else {
-        gameOver();
-      }
-      //console.log([alphabet[i].firstChild.nodeValue]);
-    });
+function masquerMot() {
+  leMot = leMot.replace(/[a-z]/g, " _ ");
+  document.getElementById('mot').textContent = leMot;
 }
 
-
-function trouverMot() {
- 
-for (; mauvaisesLettres.length < nbrTentative && lettresAttendues.length > 0; ) {
-  // console.log('lettres à trouver:', lettresAttendues);
-  // alert('Lettres à trouver: ' + lettresAttendues.length + '. '
-  //   + 'Tentatives restantes: ' + (nbrTentative - mauvaisesLettres.length));
-  // var lettre = prompt('Devinez une lettre');
-  var lettre = prompt('Devinez une lettre');
-  var choix = lettresAttendues.indexOf(lettre);
-  if (choix != -1) {
-    lettresAttendues.splice(choix, 1); // retire la 1ère occurrence de cette lettre trouvée dans le tableau
-    alert('Bonne pioche! Continuez!');
-  } else {
-    mauvaisesLettres.push(lettre);
-    alert('Le mot à trouver ne contient pas la lettre ' + lettre + ', désolé...');
-  }
-}
-if (lettresAttendues.length == 0) {
-  alert('Bravo, vous avez trouvé le mot !');
-} else if (mauvaisesLettres.length == nbrTentative) {
-  alert('Perdu... Faites une autre partie !');
-}
-
+function gagner() {
+  confirm("Félicitation vous remportez la partie !!\nSouhaitez-vous recommencer une partie ?");
+  document.location.reload();
 };
 
 function gameOver() {
@@ -161,7 +123,7 @@ function echec() {
       case 6:
         pendu.src = "images/pendu_6.png";
         input.value = "";
-        gameOver();
+        window.setTimeout(function attendre() { gameOver(); }, 1000);
         break;
 
       default:
@@ -172,26 +134,58 @@ function echec() {
   }
 };
 
-demarrer.addEventListener('click', nouvellePartie);
+function submit() {
+  formulaire.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (input.value == '') {
+      input.style.borderColor = "red";
+    }
+    else if (input.value == stockageMot) {
+      input.style.borderColor = "silver";
+      input.value = "";
+      leMot = stockageMot;
+      document.getElementById('mot').innerHTML = leMot.toUpperCase();
+      window.setTimeout(function attendre() { gagner(); }, 1000);
+    }
+    else {
+      echec();
+      input.style.borderColor = "silver";
+    }
+  });
+};
 
-formulaire.addEventListener('submit', (e) => {
-  e.preventDefault();
-  if (input.value == '') {
-    input.style.borderColor = "red";
+function jeu() {
+  for (let i = 0, lettres; lettres = alphabet[i]; i++) {
+    alphabet[i].addEventListener('click', () => {
+      lettres = alphabet[i].firstChild.nodeValue;
+      var trouvees = 0;
+      for (var choix = 0; choix != -1;) {
+        choix = lettresAttendues.indexOf(lettres);
+        if (choix != -1) {
+          lettresAttendues.splice(choix, 1);
+          trouvees++;
+        }
+      }
+      if (trouvees > 0) {
+        for (let i = 0; i <= stockageMot.length - 1; i++) {
+          lettreChoisie = stockageMot.substr(i, 1);
+          if (lettreChoisie == lettres) {
+            leMot = leMot.substr(0, i) + lettreChoisie.toUpperCase() + leMot.substr(i + 1);
+            document.getElementById('mot').innerHTML = leMot;
+            console.log(lettresAttendues);
+            console.log(lettreChoisie);
+          }
+        }
+      } else {
+        echec();
+      }
+      if (lettresAttendues.length == 0) {
+        window.setTimeout(function attendre() { gagner(); }, 1000);
+      }
+      alphabet[i].style.backgroundColor = "#d35b20";
+      alphabet[i].style.color = "#fff";
+    });
   }
-  else if (input.value == str) {
-    //score++;
-    //document.querySelector('#score').prepend(score);
-    input.style.borderColor = "silver";
-    input.value = "";
-    motATrouver.textContent = str.toUpperCase();
-    alert("Félicitation vous remportez la partie !!");
-  }
-  else {
-    echec();
-    input.style.borderColor = "silver";
-  }
-});
+};
 
-
-
+demarrer.addEventListener('click', init);

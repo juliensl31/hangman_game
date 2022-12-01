@@ -20,65 +20,82 @@
                 Cliquer sur les lettres pour dévoiler le mot !!
             </div>
             <div id="colonne_grille">
-                <div id="colonne_gauche" >
+                <div id="colonne_gauche">
                     <img id="pendu" src="images/pendu.png" alt="pendu" />
                 </div>
                 <div id="colonne_droite">
                     <div>
-                        Indice :<br/>
+                        Indice :<br />
                         <strong id="indice">Indice pour le mot à trouver</strong>
                     </div>
                     <form id="formulaire">
-                        
-                        <input id="devine" class="form-control" placeholder="Devinez le mot !" />
-                     <br>
-                      <button type="submit" class="btn">Deviner</button>
-                    </form>
-                    <!-- <div>
-                        Score :<br/>
-                        <div id="score"></div>
-                    </div> -->
 
+                        <input id="devine" class="form-control" placeholder="Devinez le mot !" />
+                        <br>
+                        <button type="submit" class="btn">Deviner</button>
+                    </form>
                     <button id="partie" class="bubbly-button">Nouvelle partie !</button>
                 </div>
             </div>
             <section id="clavier">
-            <div id="lettre_grille">
-                <div class="lettre">a</div>
-                <div class="lettre">b</div>
-                <div class="lettre">c</div>
-                <div class="lettre">d</div>
-                <div class="lettre">e</div>
-                <div class="lettre">f</div>
-                <div class="lettre">g</div>
-                <div class="lettre">h</div>
-                <div class="lettre">i</div>
-                <div class="lettre">j</div>
-                <div class="lettre">k</div>
-                <div class="lettre">l</div>
-                <div class="lettre">m</div>
-                <div class="lettre">n</div>
-                <div class="lettre">o</div>
-                <div class="lettre">p</div>
-                <div class="lettre">q</div>
-                <div class="lettre">r</div>
-                <div class="lettre">s</div>
-                <div class="lettre">t</div>
-                <div class="lettre">u</div>
-                <div class="lettre">v</div>
-                <div class="lettre">w</div>
-                <div class="lettre">x</div>
-                <div class="lettre">y</div>
-                <div class="lettre">z</div>
-             </div>
-                <div id="mot">
-                    Mot à trouver
+                <div id="lettre_grille">
+                    <div id="lettre" class="lettre">a</div>
+                    <div id="lettre" class="lettre">b</div>
+                    <div id="lettre" class="lettre">c</div>
+                    <div id="lettre" class="lettre">d</div>
+                    <div id="lettre" class="lettre">e</div>
+                    <div id="lettre" class="lettre">f</div>
+                    <div id="lettre" class="lettre">g</div>
+                    <div id="lettre" class="lettre">h</div>
+                    <div id="lettre" class="lettre">i</div>
+                    <div id="lettre" class="lettre">j</div>
+                    <div id="lettre" class="lettre">k</div>
+                    <div id="lettre" class="lettre">l</div>
+                    <div id="lettre" class="lettre">m</div>
+                    <div id="lettre" class="lettre">n</div>
+                    <div id="lettre" class="lettre">o</div>
+                    <div id="lettre" class="lettre">p</div>
+                    <div id="lettre" class="lettre">q</div>
+                    <div id="lettre" class="lettre">r</div>
+                    <div id="lettre" class="lettre">s</div>
+                    <div id="lettre" class="lettre">t</div>
+                    <div id="lettre" class="lettre">u</div>
+                    <div id="lettre" class="lettre">v</div>
+                    <div id="lettre" class="lettre">w</div>
+                    <div id="lettre" class="lettre">x</div>
+                    <div id="lettre" class="lettre">y</div>
+                    <div id="lettre" class="lettre">z</div>
                 </div>
-           </section>
+                <div id="mot">
+                </div>
+            </section>
+            <!-- <div id="gameOver">
+            <p>GAME OVER</p>
+        </div> -->
         </div>
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // Animation bouton
+        var animateButton = (e) => {
+
+            e.preventDefault;
+            //reset animation
+            e.target.classList.remove('animate');
+
+            e.target.classList.add('animate');
+            setTimeout(function () {
+                e.target.classList.remove('animate');
+            }, 700);
+        };
+
+        var bubblyButtons = document.getElementsByClassName("bubbly-button");
+
+        for (var i = 0; i < bubblyButtons.length; i++) {
+            bubblyButtons[i].addEventListener('click', animateButton, false);
+        }
+    </script>
 </body>
 
 </html>
