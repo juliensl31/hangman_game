@@ -108,7 +108,7 @@ function submit() {
       mot.textContent = leMot;
       gagner()
     }
-    else {
+    else if(input.value != leMot) {
       echec(erreur++);
       input.style.borderColor = "silver";
     }
