@@ -26,7 +26,7 @@ function init() {
   erreur = 0;
   stockageMot = [];
   pendu.src = "images/pendu.png";
-
+  reset();
   nouvellePartie();
 };
 
@@ -57,11 +57,13 @@ function masquerMot() {
 };
 
 function gagner() {
+  reset();
   pendu.src = "images/win.png";
   demarrer.style.display = 'block';
 };
 
 function gameOver() {
+  reset();
   pendu.src = "images/gameover.png";
   demarrer.style.display = 'block';
 };
@@ -113,12 +115,24 @@ function submit() {
   });
 };
 
+[].forEach.call(document.querySelectorAll('.lettre'), function(div) {
+  div.addEventListener('click', function(e) {
+    if (!this.classList.contains('disabled')) {
+      this.classList.add('disabled');
+    }
+  });
+});
+
+function reset() {
+  [].forEach.call(document.querySelectorAll('.lettre'), function(o) {
+    o.classList.remove('disabled');
+  });
+}
+
 function click() {
   for (let i = 0, lettres; lettres = alphabet[i]; i++) {
     alphabet[i].addEventListener('click', () => {
       lettres = alphabet[i].firstChild.nodeValue;
-      // alphabet[i].className = 'lettreClick';
-
       if (leMot.includes(lettres)) {
         for (let i = 0; i < leMot.length; i++) {
 
