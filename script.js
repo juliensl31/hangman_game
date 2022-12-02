@@ -4,48 +4,29 @@ let indice = document.querySelector('#indice');
 let demarrer = document.querySelector('#partie');
 let formulaire = document.querySelector('#formulaire');
 let input = document.querySelector('#devine');
+let mot = document.querySelector("#mot");
 let pendu = document.getElementById('pendu');
 
-let stockageMot = [];
-let leMot = [];
-let lettresAttendues = [];
-let lettreChoisie = "";
+let stockageMot;
+let leMot;
+let mauvaiseLettres = [];
 let erreur = 0;
 let dernier = 0;
 let nombreAleatoire = 0;
 
+
 let mots = [
-  ["baseball", "SPORT"],
-  ["tennis", "SPORT"],
-  ["paddle", "SPORT"],
-  ["judo", "SPORT"],
-  ["basketball", "SPORT"],
-  ["karate", "SPORT"],
-  ["france", "PAYS"],
-  ["espagne", "PAYS"],
-  ["allemagne", "PAYS"],
-  ["canada", "PAYS"],
-  ["angleterre", "PAYS"],
-  ["ukraine", "PAYS"],
-  ["pomme", "FRUITS"],
-  ["fraise", "FRUITS"],
-  ["banane", "FRUITS"],
-  ["abricot", "FRUITS"],
-  ["raisin", "FRUITS"],
-  ["orange", "FRUITS"],
-  ["renault", "MARQUE DE VOITURE"],
-  ["peugeot", "MARQUE DE VOITURE"],
-  ["ferrari", "MARQUE DE VOITURE"],
-  ["lamborghini", "MARQUE DE VOITURE"],
-  ["citroen", "MARQUE DE VOITURE"],
-  ["porsche", "MARQUE DE VOITURE"],
+  ["BASEBALL", "SPORT"], ["TENNIS", "SPORT"], ["PADDLE", "SPORT"], ["JUDO", "SPORT"], ["BASKET BALL", "SPORT"], ["KARATE", "SPORT"],
+  ["FRANCE", "PAYS"], ["ESPAGNE", "PAYS"], ["ALLEMAGNE", "PAYS"], ["CANADA", "PAYS"], ["ANGLETERRE", "PAYS"], ["UKRAINE", "PAYS"],
+  ["POMME", "FRUITS"], ["FRAISE", "FRUITS"], ["BANANE", "FRUITS"], ["ABRICOT", "FRUITS"], ["RAISIN", "FRUITS"], ["ORANGE", "FRUITS"],
+  ["RENAULT", "VOITURE"], ["PEUGEOT", "VOITURE"], ["FERRARI", "VOITURE"], ["LAMBORGHINI", "VOITURE"], ["CITROEN", "VOITURE"], ["PORSCHE", "VOITURE"],
 ];
 
 function init() {
   erreur = 0;
-  lettresAttendues = [];
+  stockageMot = [];
   pendu.src = "images/pendu.png";
-  
+
   nouvellePartie();
 };
 
@@ -57,80 +38,59 @@ function nouvellePartie() {
   do {
     nombreAleatoire = genererNombreEntier(mots.length);
   } while (nombreAleatoire == dernier)
-
-  leMot = mots[nombreAleatoire][0];
+  console.log(erreur);
   indice.textContent = mots[nombreAleatoire][1];
   dernier = nombreAleatoire;
-
-  for (var i = 0; i < leMot.length; i++) {
-    lettresAttendues.push(leMot[i]);
-  }
-  stockageMot = leMot;
-  console.log(lettresAttendues);
+  leMot = mots[nombreAleatoire][0];
+  console.log(leMot);
   demarrer.style.display = 'none';
   masquerMot();
-  jeu();
+  click();
   submit();
 };
 
 function masquerMot() {
-  leMot = leMot.replace(/[a-z]/g, " _ ");
-  document.getElementById('mot').textContent = leMot;
-}
+  for (let i = 0; i < leMot.length; i++) {
+    stockageMot[i] = leMot[i].replace(/[A-Z]/, "_");
+    mot.textContent = stockageMot.join("");
+  }
+};
 
 function gagner() {
-  confirm("Félicitation vous remportez la partie !!\nSouhaitez-vous recommencer une partie ?");
-  document.location.reload();
+  pendu.src = "images/win.png";
+  demarrer.style.display = 'block';
 };
 
 function gameOver() {
-  confirm("C'est perdu !!\nSouhaitez-vous recommencer une partie ?");
-  document.location.reload();
+  pendu.src = "images/gameover.png";
+  demarrer.style.display = 'block';
 };
 
 function echec() {
-  do {
-    erreur++;
-  } while (erreur != 1 && erreur != 2 && erreur != 3 && erreur != 4 && erreur != 5 && erreur != 6)
-
-  try {
-    switch (erreur) {
-      case 1:
-        pendu.src = "images/pendu_1.png";
-        input.value = "";
-        break;
-
-      case 2:
-        pendu.src = "images/pendu_2.png";
-        input.value = "";
-        break;
-
-      case 3:
-        pendu.src = "images/pendu_3.png";
-        input.value = "";
-        break;
-
-      case 4:
-        pendu.src = "images/pendu_4.png";
-        input.value = "";
-        break;
-
-      case 5:
-        pendu.src = "images/pendu_5.png";
-        input.value = "";
-        break;
-
-      case 6:
-        pendu.src = "images/pendu_6.png";
-        input.value = "";
-        window.setTimeout(function attendre() { gameOver(); }, 1000);
-        break;
-
-      default:
-        throw new Error("Une erreur est survenue.");
-    }
+  if (erreur == 1) {
+    pendu.src = "images/pendu_1.png";
+    input.value = "";
   }
-  catch (error) {
+  else if (erreur == 2) {
+    pendu.src = "images/pendu_2.png";
+    input.value = "";
+  }
+  else if (erreur == 3) {
+    pendu.src = "images/pendu_3.png";
+    input.value = "";
+  }
+  else if (erreur == 4) {
+    pendu.src = "images/pendu_4.png";
+    input.value = "";
+  }
+  else if (erreur == 5) {
+    pendu.src = "images/pendu_5.png";
+    input.value = "";
+  }
+  else if (erreur == 6) {
+    pendu.src = "images/pendu_6.png";
+    input.value = "";
+    window.setTimeout(function attendre() { gameOver(); }, 1000);
   }
 };
 
@@ -140,50 +100,39 @@ function submit() {
     if (input.value == '') {
       input.style.borderColor = "red";
     }
-    else if (input.value == stockageMot) {
+    else if (input.value == leMot) {
       input.style.borderColor = "silver";
       input.value = "";
-      leMot = stockageMot;
-      document.getElementById('mot').innerHTML = leMot.toUpperCase();
-      window.setTimeout(function attendre() { gagner(); }, 1000);
+      mot.textContent = leMot;
+      gagner()
     }
     else {
-      echec();
+      echec(erreur++);
       input.style.borderColor = "silver";
     }
   });
 };
 
-function jeu() {
+function click() {
   for (let i = 0, lettres; lettres = alphabet[i]; i++) {
     alphabet[i].addEventListener('click', () => {
       lettres = alphabet[i].firstChild.nodeValue;
-      var trouvees = 0;
-      for (var choix = 0; choix != -1;) {
-        choix = lettresAttendues.indexOf(lettres);
-        if (choix != -1) {
-          lettresAttendues.splice(choix, 1);
-          trouvees++;
-        }
-      }
-      if (trouvees > 0) {
-        for (let i = 0; i <= stockageMot.length - 1; i++) {
-          lettreChoisie = stockageMot.substr(i, 1);
-          if (lettreChoisie == lettres) {
-            leMot = leMot.substr(0, i) + lettreChoisie.toUpperCase() + leMot.substr(i + 1);
-            document.getElementById('mot').innerHTML = leMot;
-            console.log(lettresAttendues);
-            console.log(lettreChoisie);
+      // alphabet[i].className = 'lettreClick';
+
+      if (leMot.includes(lettres)) {
+        for (let i = 0; i < leMot.length; i++) {
+
+          if (leMot[i] == lettres) {
+            stockageMot[i] = leMot[i];
+            mot.textContent = stockageMot.join("");
           }
         }
       } else {
-        echec();
+        echec(erreur++);
       }
-      if (lettresAttendues.length == 0) {
-        window.setTimeout(function attendre() { gagner(); }, 1000);
+      if (mot.textContent == leMot) {
+        gagner()
       }
-      alphabet[i].style.backgroundColor = "#d35b20";
-      alphabet[i].style.color = "#fff";
     });
   }
 };
