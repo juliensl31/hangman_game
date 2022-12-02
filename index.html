@@ -14,7 +14,7 @@
 
 <body>
     <div id="background" class="container">
-        <h1>HangMan Game</h1>
+        <h1>HangMan</h1>
         <div id="jeu">
             <div class="instruction">
                 Cliquer sur une lettre pour dévoiler le mot !!
@@ -30,7 +30,8 @@
                     </div>
                     <form id="formulaire">
 
-                        <input type="text" onkeyup="this.value=this.value.toUpperCase()" id="devine" class="form-control" placeholder="Devinez le mot !" />
+                        <input type="text" onkeyup="this.value=this.value.toUpperCase()" id="devine"
+                            class="form-control" placeholder="Devinez le mot !" />
                         <br>
                         <button type="submit" class="btn">Deviner</button>
                     </form>
@@ -69,12 +70,12 @@
                 <div id="mot">
                 </div>
             </section>
-            <!-- <div id="gameOver">
-            <p>GAME OVER</p>
-        </div> -->
         </div>
     </div>
-
+    <footer>
+        <div id="copyright" class="container">
+        </div>
+    </footer>
     <script src="script.js"></script>
     <script>
         // Animation bouton
