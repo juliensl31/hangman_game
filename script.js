@@ -14,6 +14,9 @@ let erreur = 0;
 let dernier = 0;
 let nombreAleatoire = 0;
 
+let date = new Date().getFullYear();
+copyright.innerHTML = `${date} © JSL Code`;
+
 
 let mots = [
   ["BASEBALL", "SPORT"], ["TENNIS", "SPORT"], ["PADDLE", "SPORT"], ["JUDO", "SPORT"], ["BASKET BALL", "SPORT"], ["KARATE", "SPORT"],
