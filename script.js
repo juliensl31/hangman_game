@@ -9,7 +9,6 @@ let pendu = document.getElementById('pendu');
 
 let stockageMot;
 let leMot;
-let mauvaiseLettres = [];
 let erreur = 0;
 let dernier = 0;
 let nombreAleatoire = 0;
@@ -19,7 +18,7 @@ copyright.innerHTML = `${date} © JSL Code`;
 
 
 let mots = [
-  ["BASEBALL", "SPORT"], ["TENNIS", "SPORT"], ["PADDLE", "SPORT"], ["JUDO", "SPORT"], ["BASKET BALL", "SPORT"], ["KARATE", "SPORT"],
+  ["BASEBALL", "SPORT"], ["TENNIS", "SPORT"], ["PADDLE", "SPORT"], ["JUDO", "SPORT"], ["BASKETBALL", "SPORT"], ["KARATE", "SPORT"],
   ["FRANCE", "PAYS"], ["ESPAGNE", "PAYS"], ["ALLEMAGNE", "PAYS"], ["CANADA", "PAYS"], ["ANGLETERRE", "PAYS"], ["UKRAINE", "PAYS"],
   ["POMME", "FRUITS"], ["FRAISE", "FRUITS"], ["BANANE", "FRUITS"], ["ABRICOT", "FRUITS"], ["RAISIN", "FRUITS"], ["ORANGE", "FRUITS"],
   ["RENAULT", "VOITURE"], ["PEUGEOT", "VOITURE"], ["FERRARI", "VOITURE"], ["LAMBORGHINI", "VOITURE"], ["CITROEN", "VOITURE"], ["PORSCHE", "VOITURE"],
@@ -38,18 +37,16 @@ function genererNombreEntier(max) {
 }
 
 function nouvellePartie() {
+
   do {
     nombreAleatoire = genererNombreEntier(mots.length);
   } while (nombreAleatoire == dernier)
-  console.log(erreur);
+
   indice.textContent = mots[nombreAleatoire][1];
   dernier = nombreAleatoire;
   leMot = mots[nombreAleatoire][0];
-  console.log(leMot);
   demarrer.style.display = 'none';
   masquerMot();
-  click();
-  submit();
 };
 
 function masquerMot() {
@@ -60,13 +57,11 @@ function masquerMot() {
 };
 
 function gagner() {
-  reset();
   pendu.src = "images/win.png";
   demarrer.style.display = 'block';
 };
 
 function gameOver() {
-  reset();
   pendu.src = "images/gameover.png";
   demarrer.style.display = 'block';
 };
@@ -155,3 +150,6 @@ function click() {
 };
 
 demarrer.addEventListener('click', init);
+
+click();
+submit();

@@ -35,7 +35,7 @@
                         <br>
                         <button type="submit" class="btn">Deviner</button>
                     </form>
-                    <button id="partie" class="bubbly-button">Nouvelle partie !</button>
+                    <button id="partie" class="button">Nouvelle partie !</button>
                 </div>
             </div>
             <section id="clavier">
@@ -77,26 +77,6 @@
         </div>
     </footer>
     <script src="script.js"></script>
-    <script>
-        // Animation bouton
-        var animateButton = (e) => {
-
-            e.preventDefault;
-            //reset animation
-            e.target.classList.remove('animate');
-
-            e.target.classList.add('animate');
-            setTimeout(function () {
-                e.target.classList.remove('animate');
-            }, 700);
-        };
-
-        var bubblyButtons = document.getElementsByClassName("bubbly-button");
-
-        for (var i = 0; i < bubblyButtons.length; i++) {
-            bubblyButtons[i].addEventListener('click', animateButton, false);
-        }
-    </script>
 </body>
 
 </html>
