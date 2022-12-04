@@ -63,6 +63,7 @@ function gagner() {
 };
 
 function gameOver() {
+  mot.textContent = leMot;
   pendu.src = "images/gameover.png";
   demarrer.style.display = 'block';
 };
