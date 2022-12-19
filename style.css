@@ -39,6 +39,14 @@ footer {
     text-align: center;
     font-size: x-large;
 }
+a{
+    text-decoration: none;
+    color: #fff;
+}
+a:visited{
+    text-decoration: none;
+    color: #fff;
+}
 
 #background {
     margin-top: 20px;
