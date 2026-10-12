@@ -39,7 +39,8 @@ function setupGame() {
     querySelectorAll(selector) { return selector === ".lettre" ? letters : []; }
   };
   const math = Object.create(Math);
-  math.random = () => 0; // BASEBALL, deterministic
+  let draw = 0;
+  math.random = () => (draw++ % 2) / 36; // BASEBALL, then TENNIS
   const source = fs.readFileSync(path.join(__dirname, "..", "script.js"), "utf8");
   vm.runInNewContext(source, { document, Math: math, Date, Set, Array });
   return {
