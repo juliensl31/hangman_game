@@ -40,7 +40,7 @@ function setupGame() {
   };
   const math = Object.create(Math);
   let draw = 0;
-  math.random = () => (draw++ % 2) / 36; // BASEBALL, then TENNIS
+  math.random = () => (draw++ % 2) * 0.5; // BASEBALL, then RENAULT
   const source = fs.readFileSync(path.join(__dirname, "..", "script.js"), "utf8");
   vm.runInNewContext(source, { document, Math: math, Date, Set, Array });
   return {
