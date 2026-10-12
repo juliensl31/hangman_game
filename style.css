@@ -1,190 +1,172 @@
-/* Police */
-
+/* Hangman Game: same Halloween identity, flexible layouts */
 @font-face {
-    font-family: "October Crow";
-    src: url('sources/polices/October Crow.ttf');
+  font-family: "October Crow";
+  src: url("sources/polices/October Crow.ttf");
+  font-display: swap;
 }
 @font-face {
-    font-family: "HappyHalloween";
-    src: url('sources/polices/HappyHalloween.ttf');
+  font-family: "HappyHalloween";
+  src: url("sources/polices/HappyHalloween.ttf");
+  font-display: swap;
 }
-
-/* HTML */
-
+* { box-sizing: border-box; }
+html { min-width: 280px; }
 body {
-    background-image: url('images/background.jpg');
-    background-repeat: no-repeat;
-    margin: 0;
-    font-family: 'HappyHalloween', sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  background: #12171e url("images/background.jpg") center top / cover fixed no-repeat;
+  font-family: "HappyHalloween", sans-serif;
 }
-
 h1 {
-    text-align: center;
-    color: #fff;
-    font-family: 'October Crow', sans-serif;
-    letter-spacing: 10px;
-    font-size: 3rem;
-    margin: 0;
+  margin: 0;
+  color: #fff;
+  text-align: center;
+  font: 3rem "October Crow", sans-serif;
+  letter-spacing: .18em;
 }
-
-img {
-    height: 350px;
-}
-
-footer {
-    margin-top: 20px;
-    padding: 30px 0;
-    background-color: rgb(24, 32, 41, .7);
-    color: white;
-    text-align: center;
-    font-size: x-large;
-}
-a{
-    text-decoration: none;
-    color: #fff;
-}
-a:visited{
-    text-decoration: none;
-    color: #fff;
-}
-
+img { display: block; max-width: 100%; height: auto; }
+.container { width: min(1100px, 100%); margin-inline: auto; }
 #background {
-    margin-top: 20px;
-    background-color: rgb(24, 32, 41, .7);
-    width: 1000px;
-    border-radius: 10px;
-    padding: 20px;
+  width: min(1000px, calc(100% - 32px));
+  margin: 20px auto 0;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgb(24 32 41 / 70%);
 }
-
 #colonne_grille {
-	display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    align-items: center;
-    justify-items: center;
-    margin: 30px;
-    
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  margin: 24px 12px;
+  align-items: stretch;
 }
-
-#colonne_gauche {
-    background-color: rgb(255, 255, 255, .8);
-    padding: 20px;
-    border: 1px solid #182029;
-    border-radius: 10px;
+#colonne_gauche, #colonne_droite {
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid #182029;
+  border-radius: 10px;
+  background-color: rgb(255 255 255 / 85%);
 }
-
+#colonne_gauche { display: grid; place-items: center; }
+#pendu { width: auto; max-height: 350px; object-fit: contain; }
 #colonne_droite {
-    background-color: rgb(255, 255, 255, .8);
-    padding: 60px;
-    border: 1px solid #182029;
-    border-radius: 10px;
-    text-align: center;
-    justify-content: center;
-    line-height: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+  line-height: 1.6;
 }
-
+#formulaire { width: 100%; }
+#devine {
+  width: 100%;
+  max-width: 320px;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #777;
+  border-radius: 6px;
+  font: 1rem sans-serif;
+  text-transform: uppercase;
+}
 #clavier {
-    background-color: rgb(24, 32, 41, .8);
-    border: 1px solid #fff;
-    margin: 30px;
-    border-radius: 10px;
-    padding: 20px;
+  margin: 24px 12px;
+  padding: 18px;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  background-color: rgb(24 32 41 / 80%);
 }
-
 #lettre_grille {
-    display: grid;
-    grid-template-columns: repeat(13, 1fr);
-    align-items: center;
-    justify-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(13, minmax(0, 1fr));
+  gap: 8px;
 }
-
-#mot {
-    text-align: center;
-    font-family: 'October Crow', sans-serif;
-    letter-spacing: 10px;
-    font-size: 45px;
-    padding-top: 10px;
-    color:#fff;
-}
-
-.container {
-    width: 1100px;
-    margin: 0 auto;
-}
-
-
 .lettre {
-    font-family: 'October Crow', sans-serif;
-    background-color: #fff;
-    border: 1px solid #182029;
-    border-radius: 10px;
-    padding: 10px;
-    font-weight: bold;
-    font-size: x-large;
-    margin: 10PX;
-    text-align: center;
+  min-width: 0;
+  min-height: 46px;
+  margin: 0;
+  padding: 6px 2px;
+  border: 1px solid #182029;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #182029;
+  font: bold clamp(.95rem, 1.8vw, 1.35rem) "October Crow", sans-serif;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color .16s ease, transform .16s ease;
 }
-
-.lettre:hover {
-    background-color: #d35b20;
-    color: #fff;
-    transform: scale(1.2);
-    border: none;
-    cursor: pointer;
+.lettre:hover:not(.disabled) { background-color: #d35b20; color: #fff; transform: translateY(-2px); }
+.lettre.disabled { background-color: #d35b20; color: #fff; cursor: default; }
+.lettre[aria-disabled="true"]:not(.disabled) { opacity: .65; cursor: default; }
+.lettre:focus-visible, .btn:focus-visible, .button:focus-visible, #devine:focus-visible {
+  outline: 3px solid #ff9b55;
+  outline-offset: 3px;
 }
-
-.lettre.disabled {
-    background-color: #d35b20;
-    color: #fff;
-    border-radius: 10px;
-    padding: 10px;
-    font-weight: bold;
-    margin: 10PX;
-    text-align: center;
-    text-transform: uppercase;
-    transform: scale(1.2);
-    border: none;
-    cursor: pointer;
-  }
-
+#mot {
+  min-width: 0;
+  padding-top: 16px;
+  color: #fff;
+  text-align: center;
+  overflow-wrap: anywhere;
+  font: clamp(1.2rem, 4.4vw, 2.7rem) "October Crow", sans-serif;
+  letter-spacing: clamp(.08em, .7vw, .25em);
+}
 .instruction {
-    color:#fff;
-    text-align: center;
-    font-size: 1.5rem;
-    border: 1px solid #fff;
-    border-radius: 10px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin: 30px;
-    background-color: rgb(24, 32, 41, .8);
+  margin: 24px 12px;
+  padding: 16px;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  background-color: rgb(24 32 41 / 80%);
+  color: #fff;
+  text-align: center;
+  font-size: clamp(1.05rem, 2.4vw, 1.5rem);
 }
-
-.btn {
-    color: #fff;
-    background-color: #d35b20;    
-    font-family: 'HappyHalloween', sans-serif;
-    font-size: 1.2em;
-    border: none;
-    border-radius: 5px;
-    padding: 8px;
-    margin-top: 10px;
-    transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
-    box-shadow: 0 2px 25px #dd4b02cb;
+.btn, .button {
+  display: inline-block;
+  padding: 11px 18px;
+  min-height: 44px;
+  border: 0;
+  border-radius: 6px;
+  background: #d35b20;
+  color: #fff;
+  font: 1.2rem "HappyHalloween", sans-serif;
+  cursor: pointer;
+  box-shadow: 0 2px 18px #dd4b0277;
+  transition: transform .15s ease;
 }
-
-.button {
-    display: inline-block;
-    font-size: 1.3em;
-    padding: 1em 2em;
-    margin-top: 20px;
-    -webkit-appearance: none;
-    appearance: none;
-    background-color: #d35b20;
-    font-family: 'HappyHalloween', sans-serif;
-    color: #fff;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    position: relative;
-    transition: transform ease-in 0.1s, box-shadow ease-in 0.25s;
-    box-shadow: 0 2px 25px #dd4b02cb;
+.btn:hover, .button:hover { transform: translateY(-2px); }
+.button { margin-top: 10px; }
+footer {
+  margin-top: 20px;
+  padding: 24px 12px;
+  background-color: rgb(24 32 41 / 70%);
+  color: #fff;
+  text-align: center;
+  font-size: 1.3rem;
+}
+a, a:visited { color: #fff; text-decoration: none; }
+@media (max-width: 860px) {
+  #colonne_grille { gap: 12px; margin: 16px 0; }
+  #colonne_gauche, #colonne_droite { padding: 16px; }
+  #clavier { margin: 16px 0; }
+  #lettre_grille { grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 6px; }
+}
+@media (max-width: 600px) {
+  body { background-attachment: scroll; }
+  h1 { font-size: clamp(2rem, 9vw, 3rem); letter-spacing: .1em; }
+  #background { width: calc(100% - 16px); padding: 12px; margin-top: 8px; }
+  #colonne_grille { grid-template-columns: minmax(0, 1fr); }
+  #colonne_gauche, #colonne_droite { padding: 12px; }
+  #pendu { max-height: 230px; }
+  .instruction { margin: 12px 0; padding: 12px; }
+  #clavier { padding: 10px; }
+  #lettre_grille { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
+  .lettre { min-height: 44px; font-size: 1rem; }
+  #mot { letter-spacing: .08em; }
+}
+@media (max-width: 340px) {
+  #lettre_grille { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
 }
