@@ -34,7 +34,9 @@ function setupGame() {
     "#pendu": element(),
     "#copyright": element()
   };
+  const documentHandlers = {};
   const document = {
+    addEventListener(name, handler) { documentHandlers[name] = handler; },
     querySelector(selector) { return elements[selector]; },
     querySelectorAll(selector) { return selector === ".lettre" ? letters : []; }
   };
@@ -47,6 +49,7 @@ function setupGame() {
     elements,
     letters,
     start() { elements["#partie"].trigger("click"); },
+    key(letter, extra = {}) { documentHandlers.keydown({ key: letter, target: null, altKey: false, ctrlKey: false, metaKey: false, repeat: false, ...extra }); },
     guess(word) {
       elements["#devine"].value = word;
       elements["#formulaire"].trigger("submit");
@@ -106,4 +109,24 @@ test("les lettres correctes révèlent toutes leurs occurrences", () => {
   game.start();
   game.letter("B");
   assert.equal(game.elements["#mot"].textContent, "B___B___");
+});
+
+
+test("le clavier physique révèle les lettres sans compter les répétitions", () => {
+  const game = setupGame();
+  game.start();
+  game.key("b");
+  assert.equal(game.elements["#mot"].textContent, "B___B___");
+  game.key("z");
+  game.key("z");
+  assert.equal(game.elements["#pendu"].src, "images/pendu_1.png");
+});
+
+test("la saisie du mot et les raccourcis ne jouent pas de lettre", () => {
+  const game = setupGame();
+  game.start();
+  game.key("z", { target: game.elements["#devine"] });
+  game.key("z", { ctrlKey: true });
+  game.key("z", { repeat: true });
+  assert.equal(game.elements["#pendu"].src, "images/pendu.png");
 });
