@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="images/favicon.jpg" type="image/jpg" />
     <link rel="stylesheet" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css"></script>
     <title>HangMan Game</title>
 </head>
 
@@ -21,7 +19,7 @@
             </div>
             <div id="colonne_grille">
                 <div id="colonne_gauche">
-                    <img id="pendu" src="images/pendu.png" alt="pendu" />
+                    <img id="pendu" src="images/pendu.png" alt="Illustration du pendu" />
                 </div>
                 <div id="colonne_droite">
                     <div>
@@ -30,7 +28,7 @@
                     </div>
                     <form id="formulaire">
 
-                        <input type="text" onkeyup="this.value=this.value.toUpperCase()" id="devine"
+                        <input type="text" id="devine" autocomplete="off" spellcheck="false" maxlength="32" aria-label="Proposer un mot complet"
                             class="form-control" placeholder="Devinez le mot !" />
                         <br>
                         <button type="submit" class="btn">Deviner</button>
@@ -38,43 +36,43 @@
                     <button id="partie" class="button">Nouvelle partie !</button>
                 </div>
             </div>
-            <section id="clavier">
+            <section id="clavier" aria-label="Clavier du jeu">
                 <div id="lettre_grille">
-                    <div id="lettre" class="lettre">A</div>
-                    <div id="lettre" class="lettre">B</div>
-                    <div id="lettre" class="lettre">C</div>
-                    <div id="lettre" class="lettre">D</div>
-                    <div id="lettre" class="lettre">E</div>
-                    <div id="lettre" class="lettre">F</div>
-                    <div id="lettre" class="lettre">G</div>
-                    <div id="lettre" class="lettre">H</div>
-                    <div id="lettre" class="lettre">I</div>
-                    <div id="lettre" class="lettre">J</div>
-                    <div id="lettre" class="lettre">K</div>
-                    <div id="lettre" class="lettre">L</div>
-                    <div id="lettre" class="lettre">M</div>
-                    <div id="lettre" class="lettre">N</div>
-                    <div id="lettre" class="lettre">O</div>
-                    <div id="lettre" class="lettre">P</div>
-                    <div id="lettre" class="lettre">Q</div>
-                    <div id="lettre" class="lettre">R</div>
-                    <div id="lettre" class="lettre">S</div>
-                    <div id="lettre" class="lettre">T</div>
-                    <div id="lettre" class="lettre">U</div>
-                    <div id="lettre" class="lettre">V</div>
-                    <div id="lettre" class="lettre">W</div>
-                    <div id="lettre" class="lettre">X</div>
-                    <div id="lettre" class="lettre">Y</div>
-                    <div id="lettre" class="lettre">Z</div>
+                    <button type="button" class="lettre" aria-label="Lettre A" aria-disabled="true">A</button>
+                    <button type="button" class="lettre" aria-label="Lettre B" aria-disabled="true">B</button>
+                    <button type="button" class="lettre" aria-label="Lettre C" aria-disabled="true">C</button>
+                    <button type="button" class="lettre" aria-label="Lettre D" aria-disabled="true">D</button>
+                    <button type="button" class="lettre" aria-label="Lettre E" aria-disabled="true">E</button>
+                    <button type="button" class="lettre" aria-label="Lettre F" aria-disabled="true">F</button>
+                    <button type="button" class="lettre" aria-label="Lettre G" aria-disabled="true">G</button>
+                    <button type="button" class="lettre" aria-label="Lettre H" aria-disabled="true">H</button>
+                    <button type="button" class="lettre" aria-label="Lettre I" aria-disabled="true">I</button>
+                    <button type="button" class="lettre" aria-label="Lettre J" aria-disabled="true">J</button>
+                    <button type="button" class="lettre" aria-label="Lettre K" aria-disabled="true">K</button>
+                    <button type="button" class="lettre" aria-label="Lettre L" aria-disabled="true">L</button>
+                    <button type="button" class="lettre" aria-label="Lettre M" aria-disabled="true">M</button>
+                    <button type="button" class="lettre" aria-label="Lettre N" aria-disabled="true">N</button>
+                    <button type="button" class="lettre" aria-label="Lettre O" aria-disabled="true">O</button>
+                    <button type="button" class="lettre" aria-label="Lettre P" aria-disabled="true">P</button>
+                    <button type="button" class="lettre" aria-label="Lettre Q" aria-disabled="true">Q</button>
+                    <button type="button" class="lettre" aria-label="Lettre R" aria-disabled="true">R</button>
+                    <button type="button" class="lettre" aria-label="Lettre S" aria-disabled="true">S</button>
+                    <button type="button" class="lettre" aria-label="Lettre T" aria-disabled="true">T</button>
+                    <button type="button" class="lettre" aria-label="Lettre U" aria-disabled="true">U</button>
+                    <button type="button" class="lettre" aria-label="Lettre V" aria-disabled="true">V</button>
+                    <button type="button" class="lettre" aria-label="Lettre W" aria-disabled="true">W</button>
+                    <button type="button" class="lettre" aria-label="Lettre X" aria-disabled="true">X</button>
+                    <button type="button" class="lettre" aria-label="Lettre Y" aria-disabled="true">Y</button>
+                    <button type="button" class="lettre" aria-label="Lettre Z" aria-disabled="true">Z</button>
                 </div>
-                <div id="mot">
+                <div id="mot" role="status" aria-live="polite" aria-label="Mot à découvrir">
                 </div>
             </section>
         </div>
     </div>
     <footer>
         <div >
-            <a id="copyright" class="container" href="http://jslcode.com/" target="_blank"></a>
+            <a id="copyright" class="container" href="https://jslcode.com/" target="_blank" rel="noopener noreferrer"></a>
         </div>
     </footer>
     <script src="script.js"></script>
