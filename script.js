@@ -7,6 +7,7 @@ const formulaire = document.querySelector("#formulaire");
 const input = document.querySelector("#devine");
 const mot = document.querySelector("#mot");
 const pendu = document.querySelector("#pendu");
+const message = document.querySelector("#message");
 const copyright = document.querySelector("#copyright");
 const toucheParLettre = new Map(alphabet.map((element) => [element.textContent.trim().toUpperCase(), element]));
 
@@ -38,8 +39,14 @@ function terminerPartie(gagne) {
   partieActive = false;
   mot.textContent = motActuel;
   pendu.src = gagne ? "images/win.png" : "images/gameover.png";
+  pendu.alt = gagne ? "Victoire !" : "Partie perdue";
+  pendu.classList.remove("result-win", "result-lose");
+  pendu.classList.add(gagne ? "result-win" : "result-lose");
+  message.textContent = gagne ? "Bravo, mot trouvé !" : "Perdu ! Le mot était " + motActuel + ".";
+  message.className = gagne ? "message-win" : "message-lose";
   demarrer.style.display = "block";
   alphabet.forEach((lettre) => {
+    lettre.disabled = true;
     lettre.setAttribute("aria-disabled", "true");
   });
 }
@@ -47,6 +54,8 @@ function terminerPartie(gagne) {
 function enregistrerErreur() {
   if (!partieActive) return;
   erreurs += 1;
+  message.textContent = `Raté ! Encore ${MAX_ERREURS - erreurs} erreur${MAX_ERREURS - erreurs > 1 ? "s" : ""} possible${MAX_ERREURS - erreurs > 1 ? "s" : ""}.`;
+  message.className = "message-lose";
   pendu.src = `images/pendu_${erreurs}.png`;
   if (erreurs >= MAX_ERREURS) {
     terminerPartie(false);
@@ -56,7 +65,8 @@ function enregistrerErreur() {
 function essayerLettre(lettre, element) {
   if (!partieActive || lettresEssayees.has(lettre)) return;
   lettresEssayees.add(lettre);
-  element.classList.add("disabled");
+  element.classList.add("disabled", motActuel.includes(lettre) ? "correct" : "incorrect");
+  element.disabled = true;
   element.setAttribute("aria-disabled", "true");
 
   if (!motActuel.includes(lettre)) {
@@ -69,6 +79,8 @@ function essayerLettre(lettre, element) {
       lettresRevelees[index] = lettre;
     }
   }
+  message.textContent = "Bien joué !";
+  message.className = "message-win";
   afficherMot();
   if (lettresRevelees.join("") === motActuel) {
     terminerPartie(true);
@@ -89,11 +101,16 @@ function nouvellePartie() {
   partieActive = true;
 
   pendu.src = "images/pendu.png";
+  pendu.alt = "Illustration du pendu";
+  pendu.classList.remove("result-win", "result-lose");
+  message.textContent = "";
+  message.className = "";
   demarrer.style.display = "none";
   input.value = "";
   input.style.borderColor = "";
   alphabet.forEach((lettre) => {
-    lettre.classList.remove("disabled");
+    lettre.classList.remove("disabled", "correct", "incorrect");
+    lettre.disabled = false;
     lettre.setAttribute("aria-disabled", "false");
   });
   afficherMot();
@@ -106,6 +123,8 @@ formulaire.addEventListener("submit", (event) => {
   const proposition = input.value.trim().toLocaleUpperCase("fr-FR");
   if (!proposition) {
     input.style.borderColor = "red";
+    message.textContent = "Saisis un mot pour tenter ta chance.";
+    message.className = "message-lose";
     return;
   }
 
@@ -132,4 +151,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 demarrer.addEventListener("click", nouvellePartie);
-alphabet.forEach((lettre) => lettre.setAttribute("aria-disabled", "true"));
+alphabet.forEach((lettre) => {
+  lettre.disabled = true;
+  lettre.setAttribute("aria-disabled", "true");
+});

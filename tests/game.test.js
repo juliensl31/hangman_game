@@ -15,8 +15,8 @@ function setupGame() {
       style: {},
       attributes: {},
       classList: {
-        add(name) { classes.add(name); },
-        remove(name) { classes.delete(name); },
+        add(...names) { names.forEach((name) => classes.add(name)); },
+        remove(...names) { names.forEach((name) => classes.delete(name)); },
         contains(name) { return classes.has(name); }
       },
       setAttribute(name, value) { this.attributes[name] = value; },
@@ -32,6 +32,7 @@ function setupGame() {
     "#devine": element(),
     "#mot": element(),
     "#pendu": element(),
+    "#message": element(),
     "#copyright": element()
   };
   const documentHandlers = {};
@@ -128,5 +129,47 @@ test("la saisie du mot et les raccourcis ne jouent pas de lettre", () => {
   game.key("z", { target: game.elements["#devine"] });
   game.key("z", { ctrlKey: true });
   game.key("z", { repeat: true });
+  assert.equal(game.elements["#pendu"].src, "images/pendu.png");
+});
+
+test("les touches indiquent les bonnes et mauvaises lettres", () => {
+  const game = setupGame();
+  assert.equal(game.letters[0].disabled, true);
+  game.start();
+  assert.equal(game.letters[0].disabled, false);
+  game.letter("B");
+  const b = game.letters.find((item) => item.textContent === "B");
+  assert.equal(b.classList.contains("correct"), true);
+  assert.equal(b.disabled, true);
+  game.letter("Z");
+  const z = game.letters.find((item) => item.textContent === "Z");
+  assert.equal(z.classList.contains("incorrect"), true);
+  assert.equal(game.elements["#message"].textContent.includes("5 erreurs"), true);
+  game.start();
+  assert.equal(b.classList.contains("correct"), false);
+  assert.equal(z.classList.contains("incorrect"), false);
+  assert.equal(game.elements["#message"].textContent, "");
+});
+
+test("victoire et défaite annoncent le résultat et verrouillent le clavier", () => {
+  const won = setupGame();
+  won.start();
+  won.guess("BASEBALL");
+  assert.equal(won.elements["#message"].textContent, "Bravo, mot trouvé !");
+  assert.equal(won.elements["#pendu"].alt, "Victoire !");
+  assert.equal(won.letters.every((item) => item.disabled), true);
+
+  const lost = setupGame();
+  lost.start();
+  "ZQXWYT".split("").forEach((letter) => lost.letter(letter));
+  assert.equal(lost.elements["#message"].textContent.includes("BASEBALL"), true);
+  assert.equal(lost.elements["#pendu"].alt, "Partie perdue");
+});
+
+test("la tentative vide est annoncée sans erreur consommée", () => {
+  const game = setupGame();
+  game.start();
+  game.guess("  ");
+  assert.equal(game.elements["#message"].textContent, "Saisis un mot pour tenter ta chance.");
   assert.equal(game.elements["#pendu"].src, "images/pendu.png");
 });

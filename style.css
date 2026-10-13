@@ -197,6 +197,37 @@ a, a:visited { color: #fff; text-decoration: none; }
 @media (max-width: 340px) {
   #lettre_grille { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 }
+/* H3: visual feedback only. Keep the H2 dimensions and placement unchanged. */
+#message {
+  margin: 0;
+  min-height: 1.3em;
+  font: 0.95rem/1.3 "HappyHalloween", sans-serif;
+  color: #25333a;
+  text-align: center;
+}
+#message.message-win { color: #1d6841; }
+#message.message-lose { color: #a13913; }
+.lettre.disabled.correct {
+  background: #296e4c;
+  color: #fff;
+  border-color: #20543a;
+}
+.lettre.disabled.incorrect {
+  background: #974520;
+  color: #fff;
+  border-color: #783616;
+}
+.lettre:disabled { cursor: default; }
+#pendu.result-win { animation: result-pop 320ms ease-out; }
+#pendu.result-lose { animation: result-fade 320ms ease-out; }
+@keyframes result-pop {
+  from { transform: scale(.96); opacity: .6; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes result-fade {
+  from { opacity: .55; }
+  to { opacity: 1; }
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
