@@ -1621,7 +1621,7 @@ const MAX_ERREURS = 6;
 const progressionRenderers = {
   halloween({ errors, maxErrors, result }) {
     if (!scenePanel) return;
-    const phases = scenePanel.querySelectorAll("[data-h7-stage]");
+    const phases = scenePanel.querySelectorAll?.("[data-h7-stage]") || [];
     const count = Math.min(phases.length, Math.floor(Math.min(1, errors / maxErrors) * phases.length));
     phases.forEach((phase, index) => phase.classList.toggle("h7-visible", index < count));
     scenePanel.dataset.result = result || "";
