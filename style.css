@@ -14,7 +14,7 @@ body {
 }
 .container { width: 100%; margin-inline: auto; }
 #background {
-  width: min(900px, calc(100% - 24px));
+  width: min(1000px, calc(100% - 24px));
   margin: 8px auto 12px;
   padding: 12px 20px 16px;
   background: rgb(24 32 41 / 70%);
@@ -52,7 +52,7 @@ h1 {
   background: rgb(255 255 255 / 85%);
 }
 #colonne_gauche { display: flex; align-items: center; justify-content: center; }
-#pendu { display: block; width: auto; height: auto; max-width: 100%; max-height: 230px; object-fit: contain; }
+#pendu { display: block; width: auto; height: auto; max-width: 100%; max-height: 270px; object-fit: contain; }
 #colonne_droite {
   display: flex;
   flex-direction: column;
