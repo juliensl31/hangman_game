@@ -391,16 +391,18 @@ test("H6 manifeste PWA et ressources locales du cache", () => {
   assert.ok(manifest.icons.some((icon) => icon.sizes === "192x192"));
   assert.ok(manifest.icons.some((icon) => icon.sizes === "512x512"));
   for (const n of [192, 512]) {
-    const icon = fs.readFileSync(path.join(root, "images", `h6-icon-${n}.png`));
-    assert.equal(icon.toString("ascii", 1, 4), "PNG");
-    assert.equal(icon.readUInt32BE(16), n);
-    assert.equal(icon.readUInt32BE(20), n);
+    const icon = fs.readFileSync(path.join(root, "images", `h6-icon-${n}.webp`));
+    assert.equal(icon.toString("ascii", 0, 4), "RIFF");
+    assert.equal(icon.toString("ascii", 8, 12), "WEBP");
+    assert.ok(manifest.icons.some((item) => item.sizes === `${n}x${n}` && item.type === "image/webp"));
   }
   assert.match(html, /rel="manifest"/);
   assert.match(html, /src="pwa\.js"/);
   assert.match(pwa, /navigator\.serviceWorker\.register/);
   const resources = [...sw.matchAll(/^  "\.\/([^"]+)",?$/gm)].map((match) => match[1]);
   assert.ok(resources.includes("script.js"));
+  assert.ok(resources.includes("images/h6-icon-192.webp"));
+  assert.ok(resources.includes("images/h6-icon-512.webp"));
   assert.ok(resources.includes("style.css"));
   assert.ok(resources.includes("images/hangman-scene-exacte-reference.webp"));
   assert.ok(resources.includes("sources/polices/October Crow.ttf"));
@@ -427,7 +429,7 @@ test("H6 service worker installe les ressources et sert la page hors ligne", asy
   };
   const cachesMock = {
     async open() { return cache; },
-    async keys() { return ["hangman-pwa-previous", "hangman-pwa-h6-v1"]; },
+    async keys() { return ["hangman-pwa-previous", "hangman-pwa-h6-v2"]; },
     async delete() { return true; }
   };
   const context = {
