@@ -14,7 +14,7 @@ body {
 }
 .container { width: 100%; margin-inline: auto; }
 #background {
-  width: min(1500px, calc(100% - 24px));
+  width: min(1000px, calc(100% - 24px));
   margin: 8px auto 12px;
   padding: 12px 20px 16px;
   background: rgb(24 32 41 / 70%);
@@ -22,7 +22,7 @@ body {
 }
 h1 {
   color: #fff;
-  font: clamp(2rem, 3.5vw, 3.1rem)/1.15 "October Crow", sans-serif;
+  font: clamp(2rem, 3.5vw, 2.75rem)/1.15 "October Crow", sans-serif;
   letter-spacing: .14em;
   margin: 0;
   text-align: center;
@@ -35,12 +35,12 @@ h1 {
   background: rgb(24 32 41 / 80%);
   color: #fff;
   text-align: center;
-  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
 }
 #colonne_grille {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 12px;
   align-items: stretch;
   margin: 0;
 }
@@ -52,7 +52,7 @@ h1 {
   background: rgb(255 255 255 / 85%);
 }
 #colonne_gauche { display: flex; align-items: center; justify-content: center; }
-#pendu { display: block; width: auto; height: auto; max-width: 100%; max-height: min(405px, 43dvh); object-fit: contain; }
+#pendu { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
 #colonne_droite {
   display: flex;
   flex-direction: column;
@@ -104,7 +104,7 @@ h1 {
   border-radius: 7px;
   background: #fff;
   color: #182029;
-  font: bold clamp(1rem, 1.6vw, 1.5rem) "October Crow", sans-serif;
+  font: bold clamp(1rem, 1.6vw, 1.3rem) "October Crow", sans-serif;
   cursor: pointer;
   transition: background-color .15s ease;
 }
@@ -134,6 +134,21 @@ footer {
   font-size: 1.1rem;
 }
 a, a:visited { color: #fff; text-decoration: none; }
+/* Desktop: 50% taller panels than the earlier 270px version.
+   Reserve room for the heading, keyboard and footer so the window does not scroll. */
+@media (min-width: 861px) and (min-height: 700px) {
+  body { height: 100dvh; overflow: hidden; }
+  #background { flex: 0 0 auto; margin: 8px auto 0; padding: 10px 18px 12px; }
+  .instruction { margin: 6px 0 8px; padding: 7px 10px; }
+  #colonne_grille { height: min(405px, calc(100dvh - 370px)); }
+  #colonne_gauche, #colonne_droite { min-height: 0; }
+  #pendu { max-height: calc(100% - 12px); }
+  #clavier { margin-top: 9px; padding: 8px 10px; }
+  #lettre_grille { gap: 5px; }
+  .lettre { min-height: 38px; }
+  #mot { padding-top: 4px; }
+  footer { padding: 8px 12px; }
+}
 @media (max-width: 860px) {
   #background { width: min(720px, calc(100% - 16px)); padding: 12px; }
   #lettre_grille { grid-template-columns: repeat(9, minmax(0, 1fr)); }
