@@ -2,7 +2,7 @@
 
 // H6 : fichier HTML, catalogue, polices et illustrations accessibles sans réseau.
 // Modifier cette version lors d'un changement majeur des ressources mises en cache.
-const CACHE_NAME = "hangman-pwa-h6-v2";
+const CACHE_NAME = "hangman-pwa-h6-v3";
 const PRECACHE = [
   "./",
   "./index.html",
@@ -11,6 +11,7 @@ const PRECACHE = [
   "./pwa.js",
   "./manifest.webmanifest",
   "./images/h6-icon-192.webp",
+  "./images/h6-ios-icon-180.png",
   "./images/h6-icon-512.webp",
   "./images/hangman-scene-exacte-reference.webp",
   "./images/pendu.png",
