@@ -376,3 +376,82 @@ test("H5.2 bandeau avec fantôme, catégorie compacte et deux scores séparés",
   assert.match(css, /\.h52-scoreboard\s*\{/);
   assert.match(css, /\.lettre\s*\{[\s\S]*?text-shadow:/);
 });
+
+test("H6 manifeste PWA et ressources locales du cache", () => {
+  const root = path.join(__dirname, "..");
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"));
+  const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
+  const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
+  const pwa = fs.readFileSync(path.join(root, "pwa.js"), "utf8");
+  assert.equal(manifest.display, "standalone");
+  assert.equal(manifest.start_url, "./");
+  assert.equal(manifest.scope, "./");
+  assert.equal(manifest.lang, "fr");
+  assert.ok(manifest.icons.length > 0);
+  assert.match(html, /rel="manifest"/);
+  assert.match(html, /src="pwa\.js"/);
+  assert.match(pwa, /navigator\.serviceWorker\.register/);
+  const resources = [...sw.matchAll(/^  "\.\/([^"]+)",?$/gm)].map((match) => match[1]);
+  assert.ok(resources.includes("script.js"));
+  assert.ok(resources.includes("style.css"));
+  assert.ok(resources.includes("images/hangman-scene-exacte-reference.webp"));
+  assert.ok(resources.includes("sources/polices/October Crow.ttf"));
+  assert.ok(resources.includes("sources/polices/HappyHalloween.ttf"));
+  for (const file of resources) assert.ok(fs.existsSync(path.join(root, file)), file);
+});
+
+test("H6 service worker installe les ressources et sert la page hors ligne", async () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "sw.js"), "utf8");
+  const callbacks = {};
+  const cached = new Map();
+  let claimed = false;
+  const scope = "https://example.test/hangman/";
+  const key = (value) => {
+    const raw = typeof value === "string" ? value : value.url;
+    return new URL(raw, scope).href;
+  };
+  const cache = {
+    async addAll(paths) {
+      for (const file of paths) cached.set(key(file), { offline: file });
+    },
+    async put(request, response) { cached.set(key(request), response); },
+    async match(request) { return cached.get(key(request)); }
+  };
+  const cachesMock = {
+    async open() { return cache; },
+    async keys() { return ["hangman-pwa-previous", "hangman-pwa-h6-v1"]; },
+    async delete() { return true; }
+  };
+  const context = {
+    self: {
+      registration: { scope },
+      clients: { async claim() { claimed = true; } },
+      async skipWaiting() {},
+      addEventListener(name, fn) { callbacks[name] = fn; }
+    },
+    caches: cachesMock, URL,
+    fetch: async () => { throw new Error("offline"); },
+    Response: { error() { return { error: true }; } }
+  };
+  vm.runInNewContext(source, context);
+  const run = async (name) => {
+    let promise;
+    callbacks[name]({ waitUntil(value) { promise = value; } });
+    await promise;
+  };
+  await run("install");
+  await run("activate");
+  assert.ok(claimed);
+  assert.ok(cached.has(scope + "index.html"));
+  let result;
+  callbacks.fetch({
+    request: { method: "GET", mode: "navigate", url: scope },
+    respondWith(value) { result = value; }
+  });
+  assert.ok((await result).offline, "navigation hors ligne servie depuis cache");
+  callbacks.fetch({
+    request: { method: "GET", mode: "cors", url: scope + "style.css" },
+    respondWith(value) { result = value; }
+  });
+  assert.equal((await result).offline, "./style.css");
+});
