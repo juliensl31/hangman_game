@@ -344,7 +344,7 @@ h1 .h52-title-accent {
 #colonne_gauche .h52-scene {
   position: absolute;
   inset: 0;
-  background: url("images/h52-halloween-scene.svg") center / cover no-repeat;
+  background: url("images/h52-approved-scene.svg") center / cover no-repeat;
   filter: saturate(1.12);
   transition: filter 250ms ease;
 }
@@ -618,3 +618,25 @@ footer { font-size: 1.12rem; }
 #colonne_gauche[data-errors="5"] .h52-scene { filter: brightness(.94) saturate(1.04); }
 #colonne_gauche[data-errors="6"] .h52-scene { filter: brightness(.90) saturate(1); }
 #colonne_gauche[data-result="win"] .h52-scene { filter: brightness(1.25) saturate(1.48); }
+
+/* H5.2 visual parity: restrained cinematic glows around a local photo scene. */
+body {
+  background:
+    radial-gradient(ellipse 34% 45% at 0% 75%, rgb(255 101 19 / 30%), transparent 85%),
+    radial-gradient(ellipse 38% 42% at 100% 76%, rgb(252 92 19 / 26%), transparent 85%),
+    radial-gradient(ellipse 44% 45% at 92% 0%, rgb(170 55 28 / 28%), transparent 80%),
+    linear-gradient(135deg, #080d16 0%, #17121b 47%, #0a0d16 100%);
+}
+#colonne_gauche .h52-scene {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(1.08) saturate(1.15);
+}
+#colonne_gauche[data-errors="1"] .h52-scene { filter: brightness(1.06) saturate(1.14); }
+#colonne_gauche[data-errors="2"] .h52-scene { filter: brightness(1.05) saturate(1.12); }
+#colonne_gauche[data-errors="3"] .h52-scene { filter: brightness(1.04) saturate(1.10); }
+#colonne_gauche[data-errors="4"] .h52-scene { filter: brightness(1.02) saturate(1.07); }
+#colonne_gauche[data-errors="5"] .h52-scene { filter: brightness(1.0) saturate(1.04); }
+#colonne_gauche[data-errors="6"] .h52-scene { filter: brightness(.98) saturate(1); }
+#colonne_gauche[data-result="win"] .h52-scene { filter: brightness(1.18) saturate(1.25); }
