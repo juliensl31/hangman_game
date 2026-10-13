@@ -211,7 +211,7 @@ test("H4 compte exactement une victoire et une défaite par partie", () => {
   assert.equal(game.elements["#statistiques"].textContent, "Victoires : 1 · Défaites : 1");
 });
 
-test("H5 contient 300 mots avec 60 mots par catégorie et des indices légers", () => {
+test("H5 contient 390 mots dans 8 catégories avec des indices légers", () => {
   const source = fs.readFileSync(path.join(__dirname, "..", "script.js"), "utf8");
   const words = vm.runInNewContext(source + "\n;mots", {
     document: {
@@ -221,7 +221,7 @@ test("H5 contient 300 mots avec 60 mots par catégorie et des indices légers", 
     },
     Math, Date, Set, Map, Array
   });
-  assert.equal(words.length, 300);
+  assert.equal(words.length, 390);
   const seen = new Set();
   const counts = new Map();
   for (const [word, category, clue] of words) {
@@ -236,6 +236,9 @@ test("H5 contient 300 mots avec 60 mots par catégorie et des indices légers", 
   }
   for (const cat of ["SPORT", "PAYS", "FRUITS", "VOITURE", "HALLOWEEN"]) {
     assert.equal(counts.get(cat), 60, cat);
+  }
+  for (const cat of ["ANIMAUX", "METIERS", "CINEMA"]) {
+    assert.equal(counts.get(cat), 30, cat);
   }
 });
 
@@ -266,4 +269,25 @@ test("H5 le clavier physique ignore le menu et les autres contrôles", () => {
   assert.equal(game.elements["#pendu"].src, "images/pendu.png");
   game.key("z");
   assert.equal(game.elements["#pendu"].src, "images/pendu_1.png");
+});
+
+test("H5 les nouvelles catégories donnent 30 mots jouables et des indices courts", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "script.js"), "utf8");
+  const words = vm.runInNewContext(source + "\n;mots", {
+    document: {
+      querySelectorAll() { return []; },
+      querySelector() { return { textContent: "", value: "", style: {}, addEventListener() {}, setAttribute() {} }; },
+      addEventListener() {}
+    }, Math, Date, Set, Map, Array
+  });
+  for (const category of ["ANIMAUX", "METIERS", "CINEMA"]) {
+    const subset = words.filter(([, cat]) => cat === category);
+    assert.equal(subset.length, 30);
+    const game = setupGame();
+    game.elements["#categorie"].value = category;
+    game.start();
+    assert.ok(subset.some(([word, , hint]) =>
+      game.elements["#mot"].textContent.length === word.length &&
+      game.elements["#indice"].textContent === hint));
+  }
 });
