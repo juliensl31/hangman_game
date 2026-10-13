@@ -181,7 +181,7 @@ test("H4 filtre les mots de la catégorie choisie", () => {
   const game = setupGame();
   game.elements["#categorie"].value = "FRUITS";
   game.start();
-  assert.equal(game.elements["#indice"].textContent, "FRUITS");
+  assert.equal(game.elements["#indice"].textContent, "Fruit croquant souvent associé à Newton.");
   game.guess("POMME");
   assert.equal(game.elements["#pendu"].src, "images/win.png");
 });
@@ -189,12 +189,12 @@ test("H4 filtre les mots de la catégorie choisie", () => {
 test("H4 le changement de catégorie n'interrompt pas la partie en cours", () => {
   const game = setupGame();
   game.start();
-  assert.equal(game.elements["#indice"].textContent, "SPORT");
+  assert.equal(game.elements["#indice"].textContent, "On frappe une balle avec une batte et on court entre les bases.");
   game.elements["#categorie"].value = "PAYS";
   game.guess("BASEBALL");
   assert.equal(game.elements["#pendu"].src, "images/win.png");
   game.start();
-  assert.equal(game.elements["#indice"].textContent, "PAYS");
+  assert.equal(game.elements["#indice"].textContent, "Pays européen dont la capitale est Paris.");
 });
 
 test("H4 compte exactement une victoire et une défaite par partie", () => {
@@ -209,4 +209,23 @@ test("H4 compte exactement une victoire et une défaite par partie", () => {
   assert.equal(game.elements["#statistiques"].textContent, "Victoires : 1 · Défaites : 1");
   game.start();
   assert.equal(game.elements["#statistiques"].textContent, "Victoires : 1 · Défaites : 1");
+});
+
+test("chaque mot dispose d'un indice distinct de sa catégorie et de sa réponse", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "script.js"), "utf8");
+  const catalogue = vm.runInNewContext(source + "\n;({ mots, indices })", {
+    document: {
+      querySelectorAll() { return []; },
+      querySelector() { return { textContent: "", value: "", style: {}, addEventListener() {}, setAttribute() {} }; },
+      addEventListener() {}
+    },
+    Math, Date, Set, Map, Array
+  });
+  for (const [word, category] of catalogue.mots) {
+    const clue = catalogue.indices[word];
+    assert.equal(typeof clue, "string", `Indice manquant : ${word}`);
+    assert.ok(clue.length > 15, `Indice trop court : ${word}`);
+    assert.notEqual(clue.toUpperCase(), category);
+    assert.equal(clue.toUpperCase().includes(word), false, `Indice dévoilant le mot : ${word}`);
+  }
 });
