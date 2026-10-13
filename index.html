@@ -39,11 +39,12 @@
                     <div class="h52-attempts" id="h52-attempts" aria-live="polite">6 essais restants</div>
                 </div>
                 <div id="colonne_droite">
-                    <div>
-                        Indice :<br />
+                    <div class="h52-hint">
+                        <div class="h52-label">✦ Indice</div>
                         <strong id="indice">Indice pour le mot à trouver</strong>
                     </div>
                     <form id="formulaire">
+                        <label class="h52-label" for="devine">✎ Devine le mot</label>
 
                         <input type="text" id="devine" autocomplete="off" spellcheck="false" maxlength="32" aria-label="Proposer un mot complet"
                             class="form-control" placeholder="Devinez le mot !" />
@@ -53,6 +54,9 @@
                     <button id="partie" class="button">Nouvelle partie !</button>
                     <p id="message" role="status" aria-live="polite" aria-atomic="true"></p>
                 </div>
+            </div>
+            <div class="h52-word-panel" aria-label="Mot à deviner">
+                <div id="mot" role="status" aria-live="polite" aria-label="Mot à découvrir"></div>
             </div>
             <section id="clavier" aria-label="Clavier du jeu">
                 <div id="lettre_grille">
@@ -82,8 +86,6 @@
                     <button type="button" class="lettre" aria-label="Lettre X" aria-disabled="true">X</button>
                     <button type="button" class="lettre" aria-label="Lettre Y" aria-disabled="true">Y</button>
                     <button type="button" class="lettre" aria-label="Lettre Z" aria-disabled="true">Z</button>
-                </div>
-                <div id="mot" role="status" aria-live="polite" aria-label="Mot à découvrir">
                 </div>
             </section>
         </div>
