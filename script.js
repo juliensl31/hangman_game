@@ -1616,6 +1616,21 @@ const mots = [
 ];
 
 const MAX_ERREURS = 6;
+// H7.1 : progression normalisée, sans dépendance au thème.
+// D'autres thèmes pourront fournir leur propre renderer sans toucher au jeu.
+const progressionRenderers = {
+  halloween({ errors, maxErrors, result }) {
+    if (!scenePanel) return;
+    const phases = scenePanel.querySelectorAll("[data-h7-stage]");
+    const count = Math.min(phases.length, Math.floor(Math.min(1, errors / maxErrors) * phases.length));
+    phases.forEach((phase, index) => phase.classList.toggle("h7-visible", index < count));
+    scenePanel.dataset.result = result || "";
+  }
+};
+let visualTheme = "halloween";
+function renderProgression(result = "") {
+  progressionRenderers[visualTheme]?.({errors: erreurs, maxErrors: MAX_ERREURS, result});
+}
 let motActuel = "";
 let lettresRevelees = [];
 let lettresEssayees = new Set();
@@ -1638,7 +1653,7 @@ function afficherMot() {
 
 function terminerPartie(gagne) {
   if (!partieActive) return;
-  if (scenePanel) scenePanel.dataset.result = gagne ? "win" : "lose";
+  renderProgression(gagne ? "win" : "lose");
   if (attemptsLabel) attemptsLabel.textContent = gagne ? "Mot trouvé !" : "Partie perdue";
   partieActive = false;
   if (gagne) victoires += 1;
@@ -1662,6 +1677,7 @@ function enregistrerErreur() {
   if (!partieActive) return;
   erreurs += 1;
   if (scenePanel) scenePanel.dataset.errors = String(erreurs);
+  renderProgression();
   if (attemptsLabel) attemptsLabel.textContent = `${MAX_ERREURS - erreurs} essai${MAX_ERREURS - erreurs > 1 ? "s" : ""} restant${MAX_ERREURS - erreurs > 1 ? "s" : ""}`;
   message.textContent = `Raté ! Encore ${MAX_ERREURS - erreurs} erreur${MAX_ERREURS - erreurs > 1 ? "s" : ""} possible${MAX_ERREURS - erreurs > 1 ? "s" : ""}.`;
   message.className = "message-lose";
@@ -1720,6 +1736,7 @@ function nouvellePartie() {
   indice.textContent = mots[index][2];
   erreurs = 0;
   if (scenePanel) { scenePanel.dataset.errors = "0"; scenePanel.dataset.result = ""; }
+  renderProgression();
   if (attemptsLabel) attemptsLabel.textContent = `${MAX_ERREURS} essais restants`;
   lettresEssayees = new Set();
   lettresRevelees = Array(motActuel.length).fill("_");
