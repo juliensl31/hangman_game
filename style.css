@@ -942,3 +942,37 @@ body {
 @media (max-width:600px) {
   .lettre { min-height:44px; font-size:1.15rem; }
 }
+
+/* H5.2 : respecter la référence, lettres réellement plus grandes et plus pleines. */
+.lettre {
+  min-height: 59px;
+  font-family: "October Crow", "HappyHalloween", sans-serif;
+  font-size: clamp(2rem, 2.35vw, 2.35rem);
+  font-weight: 700;
+  line-height: 1;
+  color: #f7dfbf;
+  -webkit-text-stroke: .45px currentColor;
+  text-shadow: 0 1px 0 #000b, 0 0 3px #ffc48c29;
+}
+.lettre.disabled.correct { color: #f7f0e6; font-weight: 700; }
+.lettre.disabled.incorrect { color: #f7e4d6; font-weight: 700; }
+.h52-word-panel #mot {
+  margin: 0;
+  padding: 0;
+  font-family: "October Crow", "HappyHalloween", sans-serif;
+  font-size: clamp(2.9rem, 4.1vw, 3.8rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: .24em;
+  color: #ffe6c7;
+  -webkit-text-stroke: .85px #ffe6c7;
+  text-shadow: 0 0 8px #ffb77050, 0 0 16px #ff843a29, 0 1px 0 #000b;
+}
+@media (max-width: 860px) {
+  .lettre { min-height: 48px; font-size: 1.6rem; }
+  .h52-word-panel #mot { font-size: clamp(2rem, 6.2vw, 2.7rem); letter-spacing: .14em; }
+}
+@media (max-width: 600px) {
+  .lettre { min-height: 44px; font-size: 1.3rem; }
+  .h52-word-panel #mot { font-size: clamp(1.6rem, 6.5vw, 1.9rem); letter-spacing: .09em; }
+}
