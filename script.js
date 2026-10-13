@@ -31,6 +31,7 @@ let lettresRevelees = [];
 let lettresEssayees = new Set();
 let erreurs = 0;
 let dernierIndex = -1;
+const motsRestants = new Map();
 let partieActive = false;
 let victoires = 0;
 let defaites = 0;
@@ -105,11 +106,19 @@ function nouvellePartie() {
     .filter(({ entree }) => categorie.value === "TOUTES" || entree[1] === categorie.value);
   if (candidates.length === 0) return;
 
-  let selected;
-  do {
-    selected = candidates[Math.floor(Math.random() * candidates.length)];
-  } while (candidates.length > 1 && selected.index === dernierIndex);
-  const index = selected.index;
+  // One shuffled draw bag per category: no repeats until the entire pool was played.
+  const cle = categorie.value;
+  let restants = motsRestants.get(cle);
+  if (!restants || restants.length === 0) {
+    restants = candidates.map(({ index }) => index);
+    motsRestants.set(cle, restants);
+  }
+  // Avoid repeating the immediately previous word when a new cycle begins.
+  const disponibles = restants.length > 1
+    ? restants.filter((index) => index !== dernierIndex)
+    : restants;
+  const index = disponibles[Math.floor(Math.random() * disponibles.length)];
+  restants.splice(restants.indexOf(index), 1);
 
   dernierIndex = index;
   [motActuel, indice.textContent] = mots[index];
@@ -163,7 +172,10 @@ alphabet.forEach((element) => {
 
 // Le clavier physique utilise les mêmes règles que le clavier à l’écran.
 document.addEventListener("keydown", (event) => {
-  if (event.altKey || event.ctrlKey || event.metaKey || event.repeat || event.target === input) return;
+  const cible = event.target;
+  if (event.altKey || event.ctrlKey || event.metaKey || event.repeat ||
+      cible === input || cible === categorie || cible?.isContentEditable ||
+      ["INPUT", "TEXTAREA", "SELECT", "BUTTON"].includes(cible?.tagName)) return;
   const touche = toucheParLettre.get(event.key.toUpperCase());
   if (touche) essayerLettre(event.key.toUpperCase(), touche);
 });
