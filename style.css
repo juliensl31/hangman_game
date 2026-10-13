@@ -231,3 +231,37 @@ a, a:visited { color: #fff; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* H4: keep category and session stats inside the existing instruction row. */
+.instruction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 18px;
+  flex-wrap: wrap;
+}
+.game-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: sans-serif;
+  font-size: .85rem;
+  letter-spacing: 0;
+}
+#categorie {
+  min-width: 105px;
+  min-height: 34px;
+  padding: 4px 8px;
+  background: #fff;
+  color: #182029;
+  border: 1px solid #c4794d;
+  border-radius: 6px;
+  font: inherit;
+}
+#categorie:focus-visible { outline: 3px solid #ff9b55; outline-offset: 2px; }
+#statistiques { color: #f6eee7; white-space: nowrap; font-weight: 600; }
+@media (max-width: 860px) {
+  .instruction { justify-content: center; }
+}
