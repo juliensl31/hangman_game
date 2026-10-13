@@ -28,7 +28,7 @@ const mots = [
 const indices = {
   "BASEBALL": "On frappe une balle avec une batte et on court entre les bases.",
   "TENNIS": "Une raquette, un filet et des échanges sur un court.",
-  "PADDLE": "Sport de raquette pratiqué sur l’eau, debout sur une planche.",
+  "PADDLE": "Sport de raquette proche du tennis, sur un court entouré de vitres.",
   "JUDO": "Art martial japonais où les projections sont essentielles.",
   "BASKETBALL": "Le ballon doit passer dans un panier perché en hauteur.",
   "KARATE": "Art martial japonais utilisant notamment coups de poing et de pied.",
