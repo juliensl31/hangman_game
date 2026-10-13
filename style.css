@@ -976,33 +976,3 @@ body {
   .lettre { min-height: 44px; font-size: 1.3rem; }
   .h52-word-panel #mot { font-size: clamp(1.6rem, 6.5vw, 1.9rem); letter-spacing: .09em; }
 }
-
-
-/* H7.1: progression graphique superposée, sans remplacement du décor H5.2. */
-#colonne_gauche { isolation: isolate; }
-#colonne_gauche .h7-progression {
-  position: absolute;
-  inset: 0 2% 0 auto;
-  width: 45%;
-  z-index: 2;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  pointer-events: none;
-  filter: drop-shadow(0 6px 6px #04050acc);
-}
-.h7-art { width: 100%; height: 100%; max-height: 365px; display: block; }
-.h7-art [data-h7-stage] {
-  opacity: 0;
-  transform: translateY(-3px);
-  transition: opacity 380ms ease, transform 480ms ease;
-}
-.h7-art [data-h7-stage].h7-visible { opacity: 1; transform: translateY(0); }
-#colonne_gauche[data-result="win"] .h7-progression { filter: drop-shadow(0 0 12px #e9a86a70); }
-@media (max-width: 600px) {
-  #colonne_gauche .h7-progression { width: 42%; right: 1%; }
-  .h7-art { max-height: 210px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .h7-art [data-h7-stage] { transition: none; }
-}
