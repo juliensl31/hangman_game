@@ -7,6 +7,8 @@ const formulaire = document.querySelector("#formulaire");
 const input = document.querySelector("#devine");
 const mot = document.querySelector("#mot");
 const pendu = document.querySelector("#pendu");
+const scenePanel = document.querySelector("#colonne_gauche");
+const attemptsLabel = document.querySelector("#h52-attempts");
 const message = document.querySelector("#message");
 const categorie = document.querySelector("#categorie");
 const statistiques = document.querySelector("#statistiques");
@@ -1632,6 +1634,8 @@ function afficherMot() {
 
 function terminerPartie(gagne) {
   if (!partieActive) return;
+  if (scenePanel) scenePanel.dataset.result = gagne ? "win" : "lose";
+  if (attemptsLabel) attemptsLabel.textContent = gagne ? "Mot trouvé !" : "Partie perdue";
   partieActive = false;
   if (gagne) victoires += 1;
   else defaites += 1;
@@ -1653,6 +1657,8 @@ function terminerPartie(gagne) {
 function enregistrerErreur() {
   if (!partieActive) return;
   erreurs += 1;
+  if (scenePanel) scenePanel.dataset.errors = String(erreurs);
+  if (attemptsLabel) attemptsLabel.textContent = `${MAX_ERREURS - erreurs} essai${MAX_ERREURS - erreurs > 1 ? "s" : ""} restant${MAX_ERREURS - erreurs > 1 ? "s" : ""}`;
   message.textContent = `Raté ! Encore ${MAX_ERREURS - erreurs} erreur${MAX_ERREURS - erreurs > 1 ? "s" : ""} possible${MAX_ERREURS - erreurs > 1 ? "s" : ""}.`;
   message.className = "message-lose";
   pendu.src = `images/pendu_${erreurs}.png`;
@@ -1709,6 +1715,8 @@ function nouvellePartie() {
   motActuel = mots[index][0];
   indice.textContent = mots[index][2];
   erreurs = 0;
+  if (scenePanel) { scenePanel.dataset.errors = "0"; scenePanel.dataset.result = ""; }
+  if (attemptsLabel) attemptsLabel.textContent = `${MAX_ERREURS} essais restants`;
   lettresEssayees = new Set();
   lettresRevelees = Array(motActuel.length).fill("_");
   partieActive = true;
