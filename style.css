@@ -608,3 +608,13 @@ footer { font-size: 1.12rem; }
   #formulaire { grid-template-columns: minmax(0, 1fr); }
   #lettre_grille { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 }
+
+/* The illustration stays legible after a lost round (the old filter made it near-black). */
+#colonne_gauche .h52-scene { filter: brightness(1.2) saturate(1.4) contrast(1.07); }
+#colonne_gauche[data-errors="1"] .h52-scene { filter: brightness(1.16) saturate(1.33); }
+#colonne_gauche[data-errors="2"] .h52-scene { filter: brightness(1.11) saturate(1.26); }
+#colonne_gauche[data-errors="3"] .h52-scene { filter: brightness(1.05) saturate(1.18); }
+#colonne_gauche[data-errors="4"] .h52-scene { filter: brightness(.99) saturate(1.12); }
+#colonne_gauche[data-errors="5"] .h52-scene { filter: brightness(.94) saturate(1.04); }
+#colonne_gauche[data-errors="6"] .h52-scene { filter: brightness(.90) saturate(1); }
+#colonne_gauche[data-result="win"] .h52-scene { filter: brightness(1.25) saturate(1.48); }
