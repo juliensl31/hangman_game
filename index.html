@@ -29,7 +29,17 @@
                         <option value="METIERS">Métiers</option>
                         <option value="CINEMA">Cinéma</option>
                     </select>
-                    <span id="statistiques" aria-label="Bilan de cette session">Victoires : 0 · Défaites : 0</span>
+                    <div class="h52-scoreboard" aria-label="Résultats de la session">
+                        <div class="h52-score h52-wins" aria-label="Victoires">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 3h10v6c0 4-2.2 6-5 6s-5-2-5-6V3Z"/><path d="M7 5H4v2a4 4 0 0 0 4 4m9-6h3v2a4 4 0 0 1-4 4M12 15v4m-4 2h8m-7-2h6"/></svg>
+                            <div class="h52-score-copy"><span>Victoires</span><strong id="h52-wins">0</strong></div>
+                        </div>
+                        <div class="h52-score h52-losses" aria-label="Défaites">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 2a9 9 0 0 0-6 16v4h12v-4a9 9 0 0 0-6-16Z"/><path d="M8 11h.01M16 11h.01M10 17h4m-3-3 1-1 1 1"/></svg>
+                            <div class="h52-score-copy"><span>Défaites</span><strong id="h52-losses">0</strong></div>
+                        </div>
+                    </div>
+                    <span id="statistiques" class="h52-sr-only" aria-live="polite">Victoires : 0 · Défaites : 0</span>
                 </div>
             </div>
             <div id="colonne_grille">
