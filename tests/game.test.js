@@ -210,3 +210,46 @@ test("H4 compte exactement une victoire et une défaite par partie", () => {
   game.start();
   assert.equal(game.elements["#statistiques"].textContent, "Victoires : 1 · Défaites : 1");
 });
+
+test("H5 parcourt tous les mots d'une catégorie avant répétition", () => {
+  const game = setupGame();
+  game.elements["#categorie"].value = "SPORT";
+  const seen = new Set();
+  for (let i = 0; i < 6; i += 1) {
+    game.start();
+    for (let attempt = 0; attempt < 6; attempt += 1) game.guess("ZZZZ");
+    const result = game.elements["#message"].textContent.match(/Le mot était ([A-Z]+)\./);
+    assert.ok(result);
+    assert.equal(seen.has(result[1]), false, `mot répété avant épuisement : ${result[1]}`);
+    seen.add(result[1]);
+  }
+  assert.equal(seen.size, 6);
+  game.start();
+  assert.equal(game.elements["#indice"].textContent, "SPORT");
+});
+
+test("H5 toutes catégories parcourt les 30 mots sans doublon", () => {
+  const game = setupGame();
+  const seen = new Set();
+  for (let i = 0; i < 30; i += 1) {
+    game.start();
+    for (let attempt = 0; attempt < 6; attempt += 1) game.guess("ZZZZ");
+    const result = game.elements["#message"].textContent.match(/Le mot était ([A-Z]+)\./);
+    assert.ok(result);
+    assert.equal(seen.has(result[1]), false);
+    seen.add(result[1]);
+  }
+  assert.equal(seen.size, 30);
+});
+
+test("H5 le clavier physique ne joue rien dans le sélecteur ni les contrôles", () => {
+  const game = setupGame();
+  game.start();
+  game.key("z", { target: game.elements["#categorie"] });
+  game.key("z", { target: { tagName: "SELECT" } });
+  game.key("z", { target: { isContentEditable: true } });
+  game.key("z", { target: { tagName: "BUTTON" } });
+  assert.equal(game.elements["#pendu"].src, "images/pendu.png");
+  game.key("z");
+  assert.equal(game.elements["#pendu"].src, "images/pendu_1.png");
+});
