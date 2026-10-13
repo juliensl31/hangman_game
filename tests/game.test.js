@@ -364,3 +364,15 @@ test("H5.2 les compteurs avec icônes suivent victoires et défaites", () => {
   assert.match(css, /\.h52-wins svg/);
   assert.match(css, /\.h52-losses svg/);
 });
+
+test("H5.2 bandeau avec fantôme, catégorie compacte et deux scores séparés", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+  const css = fs.readFileSync(path.join(__dirname, "..", "style.css"), "utf8");
+  for (const name of ["h52-ghost", "h52-intro", "h52-category", "h52-scoreboard", "h52-wins", "h52-losses"]) {
+    assert.ok(html.includes(name), name);
+  }
+  assert.match(css, /\.h52-intro\s*\{/);
+  assert.match(css, /\.h52-category\s*\{/);
+  assert.match(css, /\.h52-scoreboard\s*\{/);
+  assert.match(css, /\.lettre\s*\{[\s\S]*?text-shadow:/);
+});
