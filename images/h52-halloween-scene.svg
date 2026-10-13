@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 550" role="img" aria-label="Citrouilles lumineuses, lanterne et ciel d'Halloween">
+<defs>
+<linearGradient id="sky" x2=".7" y2="1"><stop stop-color="#0a101b"/><stop offset=".58" stop-color="#171723"/><stop offset="1" stop-color="#311b1e"/></linearGradient>
+<radialGradient id="halo"><stop stop-color="#ff802c" stop-opacity=".53"/><stop offset="1" stop-color="#ff802c" stop-opacity="0"/></radialGradient>
+<radialGradient id="pump"><stop stop-color="#fa8625"/><stop offset=".56" stop-color="#c84c0f"/><stop offset="1" stop-color="#5c210e"/></radialGradient>
+<linearGradient id="ground" x2="0" y2="1"><stop stop-color="#382223"/><stop offset="1" stop-color="#100f16"/></linearGradient>
+<filter id="glow"><feGaussianBlur stdDeviation="13"/></filter>
+</defs>
+<rect width="860" height="550" fill="url(#sky)"/>
+<circle cx="560" cy="250" r="310" fill="url(#halo)"/>
+<circle cx="692" cy="126" r="65" fill="#f1ab62" opacity=".2"/>
+<circle cx="692" cy="126" r="43" fill="#ffcf85" opacity=".3"/>
+<path d="M0 456 Q165 418 295 454T590 450T860 451V550H0Z" fill="url(#ground)"/>
+<path d="M0 472Q155 436 322 475T860 474" fill="none" stroke="#d1642c" stroke-opacity=".22" stroke-width="8"/>
+<g fill="#0c0d15" opacity=".9"><path d="M588 119q19 -20 35 0q-20 -8 -35 10q-12 -19 -35 -10q16 -22 35 0Z"/><path d="M741 204q15 -15 29 0q-19 -5 -29 9q-15 -15 -31 -9q17 -17 31 0Z"/><path d="M481 165q14 -12 28 0q-18 -4 -28 9q-15 -14 -29 -9q14 -14 29 0Z"/></g>
+<!-- black metal lantern -->
+<g transform="translate(112 183)">
+<ellipse cx="87" cy="300" rx="90" ry="20" fill="#e95e25" opacity=".22" filter="url(#glow)"/>
+<path d="M44 67Q86 10 128 67M58 59Q86 -16 114 59" fill="none" stroke="#0c0c13" stroke-width="13" stroke-linecap="round"/>
+<rect x="36" y="92" width="102" height="172" rx="9" fill="#0c111b" stroke="#ba672d" stroke-width="6"/>
+<rect x="49" y="104" width="76" height="145" rx="5" fill="#492317" stroke="#d57734" stroke-width="5"/>
+<ellipse cx="88" cy="181" rx="43" ry="72" fill="#f7902b" opacity=".27" filter="url(#glow)"/>
+<path d="M86 221q-30 -30 -8 -54q9 -9 8 -24q24 24 14 42q17 26 -14 36Z" fill="#ffbf5d"/>
+<path d="M86 211q-15 -19 -3 -33q7 13 11 15q2 11 -8 18Z" fill="#fff2b7"/>
+<path d="M22 92L48 70H126L150 92ZM27 265H146L157 283H17Z" fill="#10111a" stroke="#a25830" stroke-width="5"/>
+<path d="M85 100V255" stroke="#171721" stroke-width="11"/>
+</g>
+<!-- small pumpkins -->
+<g transform="translate(420 405)">
+<ellipse cx="0" cy="76" rx="88" ry="16" fill="#000" opacity=".45"/>
+<ellipse cx="0" cy="21" rx="67" ry="63" fill="url(#pump)" stroke="#8e3214" stroke-width="5"/>
+<path d="M0 -38v112M-15 -36Q-58 14 -14 77M15 -36Q58 14 14 77" stroke="#7c2d10" stroke-width="5" fill="none" opacity=".65"/>
+<path d="M0 -39q-9 -26 7 -31" fill="none" stroke="#48663d" stroke-width="12" stroke-linecap="round"/>
+</g>
+<g transform="translate(698 425)">
+<ellipse cx="0" cy="49" rx="75" ry="13" fill="#000" opacity=".45"/>
+<ellipse cx="0" cy="0" rx="60" ry="49" fill="url(#pump)" stroke="#893816" stroke-width="5"/>
+<path d="M0 -44v88M-16 -40q-30 39 -13 82M16 -40q30 39 13 82" stroke="#7c2d10" stroke-width="5" fill="none" opacity=".6"/>
+<path d="M0 -45q-7 -16 8 -24" fill="none" stroke="#50623c" stroke-width="10"/>
+</g>
+<!-- main smiling jack o lantern -->
+<g transform="translate(495 340)">
+<ellipse cy="125" rx="160" ry="24" fill="#000" opacity=".5"/>
+<ellipse cx="0" cy="0" rx="143" ry="123" fill="#fb6b19" opacity=".4" filter="url(#glow)"/>
+<ellipse cx="0" cy="0" rx="137" ry="121" fill="url(#pump)" stroke="#74270f" stroke-width="9"/>
+<path d="M0 -118v235M-22 -117Q-90 -22 -27 114M22 -117Q90 -22 27 114" stroke="#6f290e" stroke-width="8" fill="none" opacity=".55"/>
+<path d="M0 -122q-8 -36 14 -43" stroke="#405d2c" stroke-width="18" fill="none" stroke-linecap="round"/>
+<g fill="#ffbc62" stroke="#61280f" stroke-width="7" stroke-linejoin="round"><path d="M-95 -39l60 16l-37 31Z"/><path d="M95 -39l-60 16l37 31Z"/><path d="M0 -8l-17 26h33Z"/><path d="M-81 45Q0 108 81 45L54 53L38 43L21 62L0 48L-21 62L-38 43L-54 53Z"/></g>
+<ellipse cx="-57" cy="-8" rx="31" ry="22" fill="#ffab46" opacity=".3" filter="url(#glow)"/><ellipse cx="58" cy="-8" rx="31" ry="22" fill="#ffab46" opacity=".3" filter="url(#glow)"/>
+</g>
+<g transform="translate(760 335)"><ellipse cx="0" cy="25" rx="29" ry="31" fill="#ff7d2f" opacity=".35" filter="url(#glow)"/><rect x="-15" y="17" width="30" height="71" rx="5" fill="#f5dcac"/><path d="M0 16Q-15 -4 0 -22Q16 -4 0 16" fill="#ffb23f"/></g>
+<g fill="#ce5829" opacity=".65"><path d="M293 487l14 -36 16 25 27 -7 -17 25 13 27 -31 -10 -15 19 -3 -30 -29 -11Z"/><path d="M779 510l11 -29 13 21 25 -7 -17 21 13 26 -29 -9 -17 13 1 -27 -23 -10Z"/></g>
+</svg>
