@@ -471,10 +471,28 @@ test("iOS Home Screen uses a real approved PNG rather than WebP", () => {
   const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
   const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
   const file = fs.readFileSync(path.join(root, "images/h6-ios-icon-180.png"));
-  assert.match(html, /rel="apple-touch-icon" sizes="180x180" href="images\/h6-ios-icon-180\.png"/);
+  assert.match(html, /rel="apple-touch-icon" sizes="180x180" href="\/apple-touch-icon\.png/);
   assert.equal(file.toString("ascii", 1, 4), "PNG");
   assert.equal(file.readUInt32BE(16), 180);
   assert.equal(file.readUInt32BE(20), 180);
   assert.match(sw, /images\/h6-ios-icon-180\.png/);
-  assert.match(sw, /hangman-pwa-h6-v3/);
+  assert.match(sw, /hangman-pwa-h6-v4/);
+});
+
+
+test("iOS touch icon is accessible at the standard site root", () => {
+  const root = path.join(__dirname, "..");
+  const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
+  const sw = fs.readFileSync(path.join(root, "sw.js"), "utf8");
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"));
+  const icon = fs.readFileSync(path.join(root, "apple-touch-icon.png"));
+  const original = fs.readFileSync(path.join(root, "images/h6-ios-icon-180.png"));
+  assert.equal(icon.toString("ascii", 1, 4), "PNG");
+  assert.equal(icon.readUInt32BE(16), 180);
+  assert.equal(icon.readUInt32BE(20), 180);
+  assert.deepEqual(icon, original);
+  assert.match(html, /rel="apple-touch-icon" sizes="180x180" href="\/apple-touch-icon\.png/);
+  assert.match(sw, /\.\/apple-touch-icon\.png/);
+  assert.match(sw, /hangman-pwa-h6-v4/);
+  assert.ok(manifest.icons.some((icon) => icon.src === "./apple-touch-icon.png" && icon.type === "image/png"));
 });
