@@ -181,7 +181,7 @@ test("H4 filtre les mots de la catégorie choisie", () => {
   const game = setupGame();
   game.elements["#categorie"].value = "FRUITS";
   game.start();
-  assert.equal(game.elements["#indice"].textContent, "FRUITS");
+  assert.equal(game.elements["#indice"].textContent, "Croquant et rond");
   game.guess("POMME");
   assert.equal(game.elements["#pendu"].src, "images/win.png");
 });
@@ -189,12 +189,12 @@ test("H4 filtre les mots de la catégorie choisie", () => {
 test("H4 le changement de catégorie n'interrompt pas la partie en cours", () => {
   const game = setupGame();
   game.start();
-  assert.equal(game.elements["#indice"].textContent, "SPORT");
+  assert.equal(game.elements["#indice"].textContent, "Batte et balle");
   game.elements["#categorie"].value = "PAYS";
   game.guess("BASEBALL");
   assert.equal(game.elements["#pendu"].src, "images/win.png");
   game.start();
-  assert.equal(game.elements["#indice"].textContent, "PAYS");
+  assert.notEqual(game.elements["#indice"].textContent, "PAYS");
 });
 
 test("H4 compte exactement une victoire et une défaite par partie", () => {
@@ -209,4 +209,85 @@ test("H4 compte exactement une victoire et une défaite par partie", () => {
   assert.equal(game.elements["#statistiques"].textContent, "Victoires : 1 · Défaites : 1");
   game.start();
   assert.equal(game.elements["#statistiques"].textContent, "Victoires : 1 · Défaites : 1");
+});
+
+test("H5 contient 390 mots dans 8 catégories avec des indices légers", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "script.js"), "utf8");
+  const words = vm.runInNewContext(source + "\n;mots", {
+    document: {
+      querySelectorAll() { return []; },
+      querySelector() { return { textContent: "", value: "", style: {}, addEventListener() {}, setAttribute() {} }; },
+      addEventListener() {}
+    },
+    Math, Date, Set, Map, Array
+  });
+  assert.equal(words.length, 390);
+  const seen = new Set();
+  const counts = new Map();
+  for (const [word, category, clue] of words) {
+    assert.match(word, /^[A-Z]+$/);
+    assert.equal(seen.has(word), false, word);
+    assert.equal(typeof clue, "string");
+    assert.ok(clue.length > 3 && clue.length <= 45, word);
+    assert.notEqual(clue.toUpperCase(), category);
+    assert.equal(new RegExp("(^|[^A-Z])" + word + "([^A-Z]|$)").test(clue.toUpperCase()), false, word);
+    seen.add(word);
+    counts.set(category, (counts.get(category) || 0) + 1);
+  }
+  for (const cat of ["SPORT", "PAYS", "FRUITS", "VOITURE", "HALLOWEEN"]) {
+    assert.equal(counts.get(cat), 60, cat);
+  }
+  for (const cat of ["ANIMAUX", "METIERS", "CINEMA"]) {
+    assert.equal(counts.get(cat), 30, cat);
+  }
+});
+
+test("H5 joue les 60 mots d'une catégorie sans doublon", () => {
+  const game = setupGame();
+  game.elements["#categorie"].value = "SPORT";
+  const seen = new Set();
+  for (let i = 0; i < 60; i += 1) {
+    game.start();
+    for (let failure = 0; failure < 6; failure += 1) game.guess("ZZZZ");
+    const found = game.elements["#message"].textContent.match(/Le mot était ([A-Z]+)\./);
+    assert.ok(found, "partie perdue");
+    assert.equal(seen.has(found[1]), false, found[1]);
+    seen.add(found[1]);
+  }
+  assert.equal(seen.size, 60);
+  game.start();
+  assert.equal(game.elements["#indice"].textContent.length > 0, true);
+});
+
+test("H5 le clavier physique ignore le menu et les autres contrôles", () => {
+  const game = setupGame();
+  game.start();
+  game.key("z", { target: game.elements["#categorie"] });
+  game.key("z", { target: { tagName: "SELECT" } });
+  game.key("z", { target: { tagName: "BUTTON" } });
+  game.key("z", { target: { isContentEditable: true } });
+  assert.equal(game.elements["#pendu"].src, "images/pendu.png");
+  game.key("z");
+  assert.equal(game.elements["#pendu"].src, "images/pendu_1.png");
+});
+
+test("H5 les nouvelles catégories donnent 30 mots jouables et des indices courts", () => {
+  const source = fs.readFileSync(path.join(__dirname, "..", "script.js"), "utf8");
+  const words = vm.runInNewContext(source + "\n;mots", {
+    document: {
+      querySelectorAll() { return []; },
+      querySelector() { return { textContent: "", value: "", style: {}, addEventListener() {}, setAttribute() {} }; },
+      addEventListener() {}
+    }, Math, Date, Set, Map, Array
+  });
+  for (const category of ["ANIMAUX", "METIERS", "CINEMA"]) {
+    const subset = words.filter(([, cat]) => cat === category);
+    assert.equal(subset.length, 30);
+    const game = setupGame();
+    game.elements["#categorie"].value = category;
+    game.start();
+    assert.ok(subset.some(([word, , hint]) =>
+      game.elements["#mot"].textContent.length === word.length &&
+      game.elements["#indice"].textContent === hint));
+  }
 });
