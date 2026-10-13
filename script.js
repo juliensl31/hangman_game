@@ -12,6 +12,8 @@ const attemptsLabel = document.querySelector("#h52-attempts");
 const message = document.querySelector("#message");
 const categorie = document.querySelector("#categorie");
 const statistiques = document.querySelector("#statistiques");
+const h52Wins = document.querySelector("#h52-wins");
+const h52Losses = document.querySelector("#h52-losses");
 const copyright = document.querySelector("#copyright");
 const toucheParLettre = new Map(alphabet.map((element) => [element.textContent.trim().toUpperCase(), element]));
 
@@ -1626,6 +1628,8 @@ let defaites = 0;
 
 function afficherStatistiques() {
   statistiques.textContent = `Victoires : ${victoires} · Défaites : ${defaites}`;
+  if (h52Wins) h52Wins.textContent = String(victoires);
+  if (h52Losses) h52Losses.textContent = String(defaites);
 }
 
 function afficherMot() {
