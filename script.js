@@ -8,6 +8,8 @@ const input = document.querySelector("#devine");
 const mot = document.querySelector("#mot");
 const pendu = document.querySelector("#pendu");
 const message = document.querySelector("#message");
+const categorie = document.querySelector("#categorie");
+const statistiques = document.querySelector("#statistiques");
 const copyright = document.querySelector("#copyright");
 const toucheParLettre = new Map(alphabet.map((element) => [element.textContent.trim().toUpperCase(), element]));
 
@@ -30,13 +32,23 @@ let lettresEssayees = new Set();
 let erreurs = 0;
 let dernierIndex = -1;
 let partieActive = false;
+let victoires = 0;
+let defaites = 0;
+
+function afficherStatistiques() {
+  statistiques.textContent = `Victoires : ${victoires} · Défaites : ${defaites}`;
+}
 
 function afficherMot() {
   mot.textContent = lettresRevelees.join("");
 }
 
 function terminerPartie(gagne) {
+  if (!partieActive) return;
   partieActive = false;
+  if (gagne) victoires += 1;
+  else defaites += 1;
+  afficherStatistiques();
   mot.textContent = motActuel;
   pendu.src = gagne ? "images/win.png" : "images/gameover.png";
   pendu.alt = gagne ? "Victoire !" : "Partie perdue";
@@ -88,10 +100,16 @@ function essayerLettre(lettre, element) {
 }
 
 function nouvellePartie() {
-  let index;
+  const candidates = mots
+    .map((entree, index) => ({ entree, index }))
+    .filter(({ entree }) => categorie.value === "TOUTES" || entree[1] === categorie.value);
+  if (candidates.length === 0) return;
+
+  let selected;
   do {
-    index = Math.floor(Math.random() * mots.length);
-  } while (mots.length > 1 && index === dernierIndex);
+    selected = candidates[Math.floor(Math.random() * candidates.length)];
+  } while (candidates.length > 1 && selected.index === dernierIndex);
+  const index = selected.index;
 
   dernierIndex = index;
   [motActuel, indice.textContent] = mots[index];
