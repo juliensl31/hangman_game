@@ -25,6 +25,39 @@ const mots = [
   ["CITROUILLE", "HALLOWEEN"], ["SORCIERE", "HALLOWEEN"], ["DRACULA", "HALLOWEEN"], ["ZOMBIE", "HALLOWEEN"], ["VAMPIRE", "HALLOWEEN"], ["FRANKENSTEIN", "HALLOWEEN"]
 ];
 
+const indices = {
+  "BASEBALL": "On frappe une balle avec une batte et on court entre les bases.",
+  "TENNIS": "Une raquette, un filet et des échanges sur un court.",
+  "PADDLE": "Sport de raquette pratiqué sur l’eau, debout sur une planche.",
+  "JUDO": "Art martial japonais où les projections sont essentielles.",
+  "BASKETBALL": "Le ballon doit passer dans un panier perché en hauteur.",
+  "KARATE": "Art martial japonais utilisant notamment coups de poing et de pied.",
+  "FRANCE": "Pays européen dont la capitale est Paris.",
+  "ESPAGNE": "Pays de la péninsule Ibérique, célèbre pour Madrid et Barcelone.",
+  "ALLEMAGNE": "Pays européen dont la capitale est Berlin.",
+  "CANADA": "Grand pays d’Amérique du Nord réputé pour ses érables.",
+  "ANGLETERRE": "Nation britannique dont la capitale est Londres.",
+  "UKRAINE": "Pays d’Europe de l’Est dont la capitale est Kyiv.",
+  "POMME": "Fruit croquant souvent associé à Newton.",
+  "FRAISE": "Petit fruit rouge dont les graines sont à la surface.",
+  "BANANE": "Fruit jaune et allongé que l’on épluche.",
+  "ABRICOT": "Fruit orangé à noyau que l’on récolte en été.",
+  "RAISIN": "Petits grains en grappes servant aussi à faire du vin.",
+  "ORANGE": "Agrume rond riche en vitamine C.",
+  "RENAULT": "Constructeur automobile français au logo en losange.",
+  "PEUGEOT": "Constructeur automobile français dont l’emblème est un lion.",
+  "FERRARI": "Marque italienne de voitures sportives au cheval cabré.",
+  "LAMBORGHINI": "Marque italienne de supercars au taureau.",
+  "CITROEN": "Marque française de voitures au logo à deux chevrons.",
+  "PORSCHE": "Constructeur allemand de sportives emblématiques, notamment la 911.",
+  "CITROUILLE": "Grosse courge orange que l’on sculpte en octobre.",
+  "SORCIERE": "Personnage de conte volant parfois sur un balai.",
+  "DRACULA": "Célèbre comte de Transylvanie associé aux vampires.",
+  "ZOMBIE": "Mort-vivant qui erre dans les films d’horreur.",
+  "VAMPIRE": "Créature nocturne légendaire qui boit du sang.",
+  "FRANKENSTEIN": "Nom associé à un savant qui crée une créature dans un roman gothique."
+};
+
 const MAX_ERREURS = 6;
 let motActuel = "";
 let lettresRevelees = [];
@@ -112,7 +145,8 @@ function nouvellePartie() {
   const index = selected.index;
 
   dernierIndex = index;
-  [motActuel, indice.textContent] = mots[index];
+  motActuel = mots[index][0];
+  indice.textContent = indices[motActuel];
   erreurs = 0;
   lettresEssayees = new Set();
   lettresRevelees = Array(motActuel.length).fill("_");
