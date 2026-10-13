@@ -12,13 +12,12 @@
 
 <body>
     <div id="background" class="container">
-        <h1>HangMan</h1>
+        <h1><span>Hang</span><span class="h52-title-accent">Man</span></h1>
         <div id="jeu">
             <div class="instruction">
-                <span>Clique sur une lettre pour dévoiler le mot !</span>
+                <div class="h52-intro"><svg class="h52-ghost" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16 2.2C9.35 2.2 4.7 7.35 4.7 14v12.1c0 1.3 1.5 2.03 2.55 1.27l3.25-2.38 3.42 2.62a3.37 3.37 0 0 0 4.16 0l3.42-2.62 3.25 2.38c1.05.76 2.55.03 2.55-1.27V14C27.3 7.35 22.65 2.2 16 2.2Z"/><ellipse cx="11.65" cy="14.1" rx="1.85" ry="2.3" fill="#2d2028"/><ellipse cx="20.35" cy="14.1" rx="1.85" ry="2.3" fill="#2d2028"/><ellipse cx="16" cy="20.3" rx="1.7" ry="2.15" fill="#2d2028"/><circle cx="8.8" cy="19.5" r="2.05" fill="#f2a38e" opacity=".5"/><circle cx="23.2" cy="19.5" r="2.05" fill="#f2a38e" opacity=".5"/></svg><span>Devine le mot secret en choisissant une lettre. Bonne chance !</span></div>
                 <div class="game-options">
-                    <label for="categorie">Catégorie</label>
-                    <select id="categorie" aria-label="Catégorie de la prochaine partie">
+                    <div class="h52-category"><svg class="h52-tag" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 4h8l10 10-7 7L4 11V4Z"/><circle cx="8" cy="8" r="1.5" fill="#33242b"/></svg><div class="h52-category-control"><label for="categorie">Catégorie</label><select id="categorie" aria-label="Catégorie de la prochaine partie">
                         <option value="TOUTES">Toutes</option>
                         <option value="SPORT">Sport</option>
                         <option value="PAYS">Pays</option>
@@ -28,20 +27,33 @@
                         <option value="ANIMAUX">Animaux</option>
                         <option value="METIERS">Métiers</option>
                         <option value="CINEMA">Cinéma</option>
-                    </select>
-                    <span id="statistiques" aria-label="Bilan de cette session">Victoires : 0 · Défaites : 0</span>
+                    </select></div></div>
+                    <div class="h52-scoreboard" aria-label="Résultats de la session">
+                        <div class="h52-score h52-wins" aria-label="Victoires">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 3h10v6c0 4-2.2 6-5 6s-5-2-5-6V3Z"/><path d="M7 5H4v2a4 4 0 0 0 4 4m9-6h3v2a4 4 0 0 1-4 4M12 15v4m-4 2h8m-7-2h6"/></svg>
+                            <div class="h52-score-copy"><span>Victoires</span><strong id="h52-wins">0</strong></div>
+                        </div>
+                        <div class="h52-score h52-losses" aria-label="Défaites">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"><path fill="currentColor" d="M12 1.8c-5.48 0-9.3 4.14-9.3 9.05 0 3.4 1.67 5.6 4.22 7.04v3.2c0 .73.59 1.32 1.32 1.32h7.52c.73 0 1.32-.59 1.32-1.32v-3.2c2.55-1.44 4.22-3.64 4.22-7.04 0-4.91-3.82-9.05-9.3-9.05Z"/><path fill="#25151a" stroke="none" d="M4.8 10.6c.5-1.85 2.6-2.7 4.12-1.52 1.36 1.06 1.36 3.5-.08 4.48-1.87 1.26-4.72-.45-4.04-2.96Zm14.4 0c-.5-1.85-2.6-2.7-4.12-1.52-1.36 1.06-1.36 3.5.08 4.48 1.87 1.26 4.72-.45 4.04-2.96ZM12 13.45l-1.75 2.6h3.5Z"/><path fill="#25151a" stroke="none" d="M8.4 18.2h1.3v3H8.4Zm2.35 0h1.3v3h-1.3Zm2.35 0h1.3v3h-1.3Zm2.35 0h.95v3h-.95Z"/></svg>
+                            <div class="h52-score-copy"><span>Défaites</span><strong id="h52-losses">0</strong></div>
+                        </div>
+                    </div>
+                    <span id="statistiques" class="h52-sr-only" aria-live="polite">Victoires : 0 · Défaites : 0</span>
                 </div>
             </div>
             <div id="colonne_grille">
                 <div id="colonne_gauche">
                     <img id="pendu" src="images/pendu.png" alt="Illustration du pendu" />
+                    <div class="h52-scene" aria-hidden="true"></div>
+                    <div class="h52-attempts" id="h52-attempts" aria-live="polite">6 essais restants</div>
                 </div>
                 <div id="colonne_droite">
-                    <div>
-                        Indice :<br />
+                    <div class="h52-hint">
+                        <div class="h52-label">✦ Indice</div>
                         <strong id="indice">Indice pour le mot à trouver</strong>
                     </div>
                     <form id="formulaire">
+                        <label class="h52-label" for="devine">✎ Devine le mot</label>
 
                         <input type="text" id="devine" autocomplete="off" spellcheck="false" maxlength="32" aria-label="Proposer un mot complet"
                             class="form-control" placeholder="Devinez le mot !" />
@@ -51,6 +63,9 @@
                     <button id="partie" class="button">Nouvelle partie !</button>
                     <p id="message" role="status" aria-live="polite" aria-atomic="true"></p>
                 </div>
+            </div>
+            <div class="h52-word-panel" aria-label="Mot à deviner">
+                <div id="mot" role="status" aria-live="polite" aria-label="Mot à découvrir"></div>
             </div>
             <section id="clavier" aria-label="Clavier du jeu">
                 <div id="lettre_grille">
@@ -80,8 +95,6 @@
                     <button type="button" class="lettre" aria-label="Lettre X" aria-disabled="true">X</button>
                     <button type="button" class="lettre" aria-label="Lettre Y" aria-disabled="true">Y</button>
                     <button type="button" class="lettre" aria-label="Lettre Z" aria-disabled="true">Z</button>
-                </div>
-                <div id="mot" role="status" aria-live="polite" aria-label="Mot à découvrir">
                 </div>
             </section>
         </div>

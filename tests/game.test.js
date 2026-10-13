@@ -13,6 +13,7 @@ function setupGame() {
       value: "",
       src: "",
       style: {},
+      dataset: {},
       attributes: {},
       classList: {
         add(...names) { names.forEach((name) => classes.add(name)); },
@@ -32,9 +33,13 @@ function setupGame() {
     "#devine": element(),
     "#mot": element(),
     "#pendu": element(),
+    "#colonne_gauche": element(),
+    "#h52-attempts": element("6 essais restants"),
     "#message": element(),
     "#categorie": element(),
     "#statistiques": element("Victoires : 0 · Défaites : 0"),
+    "#h52-wins": element("0"),
+    "#h52-losses": element("0"),
     "#copyright": element()
   };
   elements["#categorie"].value = "TOUTES";
@@ -290,4 +295,84 @@ test("H5 les nouvelles catégories donnent 30 mots jouables et des indices court
       game.elements["#mot"].textContent.length === word.length &&
       game.elements["#indice"].textContent === hint));
   }
+});
+
+test("H5.2 la scène suit les erreurs et les résultats sans changer les règles", () => {
+  const game = setupGame();
+  const panel = game.elements["#colonne_gauche"];
+  const attempts = game.elements["#h52-attempts"];
+  game.start();
+  assert.equal(panel.dataset.errors, "0");
+  assert.equal(attempts.textContent, "6 essais restants");
+  game.letter("Z");
+  assert.equal(panel.dataset.errors, "1");
+  assert.equal(attempts.textContent, "5 essais restants");
+  game.guess("BASEBALL");
+  assert.equal(panel.dataset.result, "win");
+  assert.equal(attempts.textContent, "Mot trouvé !");
+  game.start();
+  assert.equal(panel.dataset.result, "");
+  assert.equal(panel.dataset.errors, "0");
+  "ZQXWYT".split("").forEach((letter) => game.letter(letter));
+  assert.equal(panel.dataset.result, "lose");
+  assert.equal(attempts.textContent, "Partie perdue");
+});
+
+test("H5.2 conserve les polices locales et la scène SVG sans changer le catalogue", () => {
+  const css = fs.readFileSync(path.join(__dirname, "..", "style.css"), "utf8");
+  const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+  const svg = fs.readFileSync(path.join(__dirname, "..", "images", "h52-halloween-scene.svg"), "utf8");
+  assert.match(css, /font-family:\s*"October Crow"/);
+  assert.match(css, /hangman-scene-exacte-reference\.webp/);
+  assert.match(html, /h52-title-accent/);
+  assert.match(html, /h52-attempts/);
+  assert.match(svg, /<svg /);
+  const photo = fs.readFileSync(path.join(__dirname, "..", "images", "hangman-scene-exacte-reference.webp"));
+  assert.equal(photo.toString("ascii", 0, 4), "RIFF");
+  assert.equal(photo.toString("ascii", 8, 12), "WEBP");
+  assert.doesNotMatch(svg, /<script/i);
+});
+
+test("H5.2 le panneau du mot précède le clavier, qui ne contient plus le mot", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+  const css = fs.readFileSync(path.join(__dirname, "..", "style.css"), "utf8");
+  const wordPanel = html.indexOf('class="h52-word-panel"');
+  const keyboard = html.indexOf('id="clavier"');
+  assert.ok(wordPanel > 0 && keyboard > wordPanel, "le mot doit se trouver avant le clavier");
+  const wordTag = html.indexOf('id="mot"', wordPanel);
+  assert.ok(wordTag > wordPanel && wordTag < keyboard);
+  assert.match(css, /width:\s*min\(1260px/);
+  assert.match(css, /\.h52-word-panel/);
+  assert.match(css, /#colonne_gauche\[data-errors="6"\]/);
+});
+
+test("H5.2 les compteurs avec icônes suivent victoires et défaites", () => {
+  const game = setupGame();
+  game.start();
+  game.guess("BASEBALL");
+  assert.equal(game.elements["#h52-wins"].textContent, "1");
+  assert.equal(game.elements["#h52-losses"].textContent, "0");
+  game.start();
+  "ZQXWYT".split("").forEach((letter) => game.letter(letter));
+  assert.equal(game.elements["#h52-wins"].textContent, "1");
+  assert.equal(game.elements["#h52-losses"].textContent, "1");
+  const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+  const css = fs.readFileSync(path.join(__dirname, "..", "style.css"), "utf8");
+  assert.match(html, /class="h52-scoreboard"/);
+  assert.match(html, /id="h52-wins"/);
+  assert.match(html, /id="h52-losses"/);
+  assert.match(css, /\.h52-wins svg/);
+  assert.match(css, /\.h52-losses svg/);
+});
+
+test("H5.2 bandeau avec fantôme, catégorie compacte et deux scores séparés", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+  const css = fs.readFileSync(path.join(__dirname, "..", "style.css"), "utf8");
+  for (const name of ["h52-ghost", "h52-intro", "h52-category", "h52-scoreboard", "h52-wins", "h52-losses"]) {
+    assert.ok(html.includes(name), name);
+  }
+  assert.match(css, /\.h52-intro\s*\{/);
+  assert.match(css, /\.h52-category\s*\{/);
+  assert.match(css, /\.h52-scoreboard\s*\{/);
+  assert.match(css, /\.lettre\s*\{[\s\S]*?text-shadow:/);
 });
