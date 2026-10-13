@@ -231,3 +231,67 @@ a, a:visited { color: #fff; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* H4 : controls integrated into the existing Halloween visual language. */
+.instruction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 14px;
+  flex-wrap: wrap;
+}
+.game-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 12px;
+  font: 1.05rem/1.2 "HappyHalloween", sans-serif;
+  letter-spacing: .015em;
+}
+.game-options label {
+  color: #ffb47e;
+  white-space: nowrap;
+}
+#categorie {
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 144px;
+  min-height: 38px;
+  padding: 7px 34px 7px 13px;
+  border: 1px solid #e66b27;
+  border-radius: 8px;
+  background-color: #222932;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #ff9a52 50%),
+    linear-gradient(135deg, #ff9a52 50%, transparent 50%);
+  background-position: calc(100% - 19px) 51%, calc(100% - 13px) 51%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 1px 0 #ffffff18, 0 2px 8px #00000035;
+  color: #fff5e8;
+  font: 1.05rem/1.2 "HappyHalloween", sans-serif;
+  cursor: pointer;
+  transition: border-color .15s ease, background-color .15s ease;
+}
+#categorie:hover {
+  border-color: #ffa467;
+  background-color: #30323a;
+}
+#categorie:focus-visible {
+  outline: 3px solid #ff9b55;
+  outline-offset: 2px;
+}
+#categorie option {
+  background: #222932;
+  color: #fff5e8;
+  font-family: "HappyHalloween", sans-serif;
+}
+#statistiques {
+  color: #f6eee7;
+  white-space: nowrap;
+  font: 1.05rem/1.2 "HappyHalloween", sans-serif;
+}
+@media (max-width: 860px) {
+  .instruction { justify-content: center; }
+}
