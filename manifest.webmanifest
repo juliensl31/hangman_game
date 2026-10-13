@@ -1,0 +1,26 @@
+{
+  "id": "./",
+  "name": "HangMan Game Halloween",
+  "short_name": "HangMan",
+  "description": "Jeu du pendu Halloween avec catégories et indices, jouable hors ligne.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1018",
+  "theme_color": "#17131c",
+  "icons": [
+    {
+      "src": "./images/h6-icon-192.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "./images/h6-icon-512.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ]
+}
