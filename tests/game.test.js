@@ -388,6 +388,14 @@ test("H6 manifeste PWA et ressources locales du cache", () => {
   assert.equal(manifest.scope, "./");
   assert.equal(manifest.lang, "fr");
   assert.ok(manifest.icons.length > 0);
+  assert.ok(manifest.icons.some((icon) => icon.sizes === "192x192"));
+  assert.ok(manifest.icons.some((icon) => icon.sizes === "512x512"));
+  for (const n of [192, 512]) {
+    const icon = fs.readFileSync(path.join(root, "images", `h6-icon-${n}.png`));
+    assert.equal(icon.toString("ascii", 1, 4), "PNG");
+    assert.equal(icon.readUInt32BE(16), n);
+    assert.equal(icon.readUInt32BE(20), n);
+  }
   assert.match(html, /rel="manifest"/);
   assert.match(html, /src="pwa\.js"/);
   assert.match(pwa, /navigator\.serviceWorker\.register/);
