@@ -13,6 +13,7 @@ function setupGame() {
       value: "",
       src: "",
       style: {},
+      dataset: {},
       attributes: {},
       classList: {
         add(...names) { names.forEach((name) => classes.add(name)); },
@@ -32,6 +33,8 @@ function setupGame() {
     "#devine": element(),
     "#mot": element(),
     "#pendu": element(),
+    "#colonne_gauche": element(),
+    "#h52-attempts": element("6 essais restants"),
     "#message": element(),
     "#categorie": element(),
     "#statistiques": element("Victoires : 0 · Défaites : 0"),
@@ -290,4 +293,37 @@ test("H5 les nouvelles catégories donnent 30 mots jouables et des indices court
       game.elements["#mot"].textContent.length === word.length &&
       game.elements["#indice"].textContent === hint));
   }
+});
+
+test("H5.2 la scène suit les erreurs et les résultats sans changer les règles", () => {
+  const game = setupGame();
+  const panel = game.elements["#colonne_gauche"];
+  const attempts = game.elements["#h52-attempts"];
+  game.start();
+  assert.equal(panel.dataset.errors, "0");
+  assert.equal(attempts.textContent, "6 essais restants");
+  game.letter("Z");
+  assert.equal(panel.dataset.errors, "1");
+  assert.equal(attempts.textContent, "5 essais restants");
+  game.guess("BASEBALL");
+  assert.equal(panel.dataset.result, "win");
+  assert.equal(attempts.textContent, "Mot trouvé !");
+  game.start();
+  assert.equal(panel.dataset.result, "");
+  assert.equal(panel.dataset.errors, "0");
+  "ZQXWYT".split("").forEach((letter) => game.letter(letter));
+  assert.equal(panel.dataset.result, "lose");
+  assert.equal(attempts.textContent, "Partie perdue");
+});
+
+test("H5.2 conserve les polices locales et la scène SVG sans changer le catalogue", () => {
+  const css = fs.readFileSync(path.join(__dirname, "..", "style.css"), "utf8");
+  const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+  const svg = fs.readFileSync(path.join(__dirname, "..", "images", "h52-halloween-scene.svg"), "utf8");
+  assert.match(css, /font-family:\s*"October Crow"/);
+  assert.match(css, /h52-halloween-scene\.svg/);
+  assert.match(html, /h52-title-accent/);
+  assert.match(html, /h52-attempts/);
+  assert.match(svg, /<svg /);
+  assert.doesNotMatch(svg, /<script/i);
 });
