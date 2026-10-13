@@ -38,6 +38,8 @@ function setupGame() {
     "#message": element(),
     "#categorie": element(),
     "#statistiques": element("Victoires : 0 · Défaites : 0"),
+    "#h52-wins": element("0"),
+    "#h52-losses": element("0"),
     "#copyright": element()
   };
   elements["#categorie"].value = "TOUTES";
@@ -321,12 +323,13 @@ test("H5.2 conserve les polices locales et la scène SVG sans changer le catalog
   const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
   const svg = fs.readFileSync(path.join(__dirname, "..", "images", "h52-halloween-scene.svg"), "utf8");
   assert.match(css, /font-family:\s*"October Crow"/);
-  assert.match(css, /h52-approved-scene\.svg/);
+  assert.match(css, /hangman-scene-exacte-reference\.webp/);
   assert.match(html, /h52-title-accent/);
   assert.match(html, /h52-attempts/);
   assert.match(svg, /<svg /);
-  const photo = fs.readFileSync(path.join(__dirname, "..", "images", "h52-approved-scene.svg"), "utf8");
-  assert.match(photo, /data:image\/webp;base64,/);
+  const photo = fs.readFileSync(path.join(__dirname, "..", "images", "hangman-scene-exacte-reference.webp"));
+  assert.equal(photo.toString("ascii", 0, 4), "RIFF");
+  assert.equal(photo.toString("ascii", 8, 12), "WEBP");
   assert.doesNotMatch(svg, /<script/i);
 });
 
@@ -341,4 +344,23 @@ test("H5.2 le panneau du mot précède le clavier, qui ne contient plus le mot",
   assert.match(css, /width:\s*min\(1260px/);
   assert.match(css, /\.h52-word-panel/);
   assert.match(css, /#colonne_gauche\[data-errors="6"\]/);
+});
+
+test("H5.2 les compteurs avec icônes suivent victoires et défaites", () => {
+  const game = setupGame();
+  game.start();
+  game.guess("BASEBALL");
+  assert.equal(game.elements["#h52-wins"].textContent, "1");
+  assert.equal(game.elements["#h52-losses"].textContent, "0");
+  game.start();
+  "ZQXWYT".split("").forEach((letter) => game.letter(letter));
+  assert.equal(game.elements["#h52-wins"].textContent, "1");
+  assert.equal(game.elements["#h52-losses"].textContent, "1");
+  const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+  const css = fs.readFileSync(path.join(__dirname, "..", "style.css"), "utf8");
+  assert.match(html, /class="h52-scoreboard"/);
+  assert.match(html, /id="h52-wins"/);
+  assert.match(html, /id="h52-losses"/);
+  assert.match(css, /\.h52-wins svg/);
+  assert.match(css, /\.h52-losses svg/);
 });
