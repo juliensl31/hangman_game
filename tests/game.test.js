@@ -321,10 +321,12 @@ test("H5.2 conserve les polices locales et la scène SVG sans changer le catalog
   const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
   const svg = fs.readFileSync(path.join(__dirname, "..", "images", "h52-halloween-scene.svg"), "utf8");
   assert.match(css, /font-family:\s*"October Crow"/);
-  assert.match(css, /h52-halloween-scene\.svg/);
+  assert.match(css, /h52-approved-scene\.svg/);
   assert.match(html, /h52-title-accent/);
   assert.match(html, /h52-attempts/);
   assert.match(svg, /<svg /);
+  const photo = fs.readFileSync(path.join(__dirname, "..", "images", "h52-approved-scene.svg"), "utf8");
+  assert.match(photo, /data:image\/webp;base64,/);
   assert.doesNotMatch(svg, /<script/i);
 });
 
