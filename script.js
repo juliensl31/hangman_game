@@ -8,6 +8,7 @@ const input = document.querySelector("#devine");
 const mot = document.querySelector("#mot");
 const pendu = document.querySelector("#pendu");
 const copyright = document.querySelector("#copyright");
+const toucheParLettre = new Map(alphabet.map((element) => [element.textContent.trim().toUpperCase(), element]));
 
 if (copyright) {
   copyright.textContent = `${new Date().getFullYear()} © JSL Code`;
@@ -121,6 +122,13 @@ alphabet.forEach((element) => {
   element.addEventListener("click", () => {
     essayerLettre(element.textContent.trim().toUpperCase(), element);
   });
+});
+
+// Le clavier physique utilise les mêmes règles que le clavier à l’écran.
+document.addEventListener("keydown", (event) => {
+  if (event.altKey || event.ctrlKey || event.metaKey || event.repeat || event.target === input) return;
+  const touche = toucheParLettre.get(event.key.toUpperCase());
+  if (touche) essayerLettre(event.key.toUpperCase(), touche);
 });
 
 demarrer.addEventListener("click", nouvellePartie);

@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - 'script.js'
+      - 'index.html'
+      - 'style.css'
       - 'tests/**'
       - '.github/workflows/hangman-checks.yml'
   push:
@@ -11,6 +13,8 @@ on:
       - master
     paths:
       - 'script.js'
+      - 'index.html'
+      - 'style.css'
       - 'tests/**'
       - '.github/workflows/hangman-checks.yml'
 
