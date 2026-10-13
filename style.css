@@ -134,20 +134,48 @@ footer {
   font-size: 1.1rem;
 }
 a, a:visited { color: #fff; text-decoration: none; }
-/* Desktop: 50% taller panels than the earlier 270px version.
-   Reserve room for the heading, keyboard and footer so the window does not scroll. */
+/* Desktop: restore the visually balanced layout from the previous preview.
+   Reserve visible room for the keyboard; never overlap it with the panels. */
 @media (min-width: 861px) and (min-height: 700px) {
-  body { height: 100dvh; overflow: hidden; }
-  #background { flex: 0 0 auto; margin: 8px auto 0; padding: 10px 18px 12px; }
-  .instruction { margin: 6px 0 8px; padding: 7px 10px; }
-  #colonne_grille { height: min(405px, calc(100dvh - 370px)); }
+  body { min-height: 100dvh; overflow-x: hidden; }
+  #background {
+    flex: 0 0 auto;
+    margin: clamp(10px, 2.5vh, 24px) auto 10px;
+    padding: 14px 20px 18px;
+  }
+  h1 { line-height: 1.2; }
+  .instruction {
+    margin: 12px 0 16px;
+    padding: 14px 12px;
+    line-height: 1.25;
+  }
+  #colonne_grille {
+    height: clamp(300px, 42vh, 375px);
+    gap: clamp(18px, 3vw, 42px);
+    padding-inline: clamp(4px, 2vw, 34px);
+  }
   #colonne_gauche, #colonne_droite { min-height: 0; }
-  #pendu { max-height: calc(100% - 12px); }
-  #clavier { margin-top: 9px; padding: 8px 10px; }
-  #lettre_grille { gap: 5px; }
-  .lettre { min-height: 38px; }
-  #mot { padding-top: 4px; }
-  footer { padding: 8px 12px; }
+  #pendu { max-height: calc(100% - 8px); }
+  #clavier {
+    margin-top: 18px;
+    padding: 16px 20px;
+  }
+  #lettre_grille {
+    column-gap: clamp(8px, 1vw, 16px);
+    row-gap: 14px;
+  }
+  .lettre { min-height: 47px; }
+  #mot { padding-top: 8px; }
+  footer { padding: 9px 12px; }
+}
+/* Shorter laptop screens: retain the same hierarchy without forcing clipping. */
+@media (min-width: 861px) and (min-height: 700px) and (max-height: 800px) {
+  #background { margin-top: 8px; padding-block: 10px; }
+  .instruction { margin-block: 8px 10px; padding-block: 9px; }
+  #colonne_grille { height: clamp(280px, 40vh, 325px); }
+  #clavier { margin-top: 12px; padding-block: 12px; }
+  .lettre { min-height: 42px; }
+  #lettre_grille { row-gap: 10px; }
 }
 @media (max-width: 860px) {
   #background { width: min(720px, calc(100% - 16px)); padding: 12px; }
