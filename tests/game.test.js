@@ -33,8 +33,11 @@ function setupGame() {
     "#mot": element(),
     "#pendu": element(),
     "#message": element(),
+    "#categorie": element(),
+    "#statistiques": element("Victoires : 0 · Défaites : 0"),
     "#copyright": element()
   };
+  elements["#categorie"].value = "TOUTES";
   const documentHandlers = {};
   const document = {
     addEventListener(name, handler) { documentHandlers[name] = handler; },
@@ -172,4 +175,38 @@ test("la tentative vide est annoncée sans erreur consommée", () => {
   game.guess("  ");
   assert.equal(game.elements["#message"].textContent, "Saisis un mot pour tenter ta chance.");
   assert.equal(game.elements["#pendu"].src, "images/pendu.png");
+});
+
+test("H4 filtre les mots de la catégorie choisie", () => {
+  const game = setupGame();
+  game.elements["#categorie"].value = "FRUITS";
+  game.start();
+  assert.equal(game.elements["#indice"].textContent, "FRUITS");
+  game.guess("POMME");
+  assert.equal(game.elements["#pendu"].src, "images/win.png");
+});
+
+test("H4 le changement de catégorie n'interrompt pas la partie en cours", () => {
+  const game = setupGame();
+  game.start();
+  assert.equal(game.elements["#indice"].textContent, "SPORT");
+  game.elements["#categorie"].value = "PAYS";
+  game.guess("BASEBALL");
+  assert.equal(game.elements["#pendu"].src, "images/win.png");
+  game.start();
+  assert.equal(game.elements["#indice"].textContent, "PAYS");
+});
+
+test("H4 compte exactement une victoire et une défaite par partie", () => {
+  const game = setupGame();
+  game.start();
+  game.guess("BASEBALL");
+  game.guess("BASEBALL");
+  assert.equal(game.elements["#statistiques"].textContent, "Victoires : 1 · Défaites : 0");
+  game.start();
+  "ZQXWYH".split("").forEach((letter) => game.letter(letter));
+  game.letter("Z");
+  assert.equal(game.elements["#statistiques"].textContent, "Victoires : 1 · Défaites : 1");
+  game.start();
+  assert.equal(game.elements["#statistiques"].textContent, "Victoires : 1 · Défaites : 1");
 });
