@@ -1,0 +1,35 @@
+name: Generate iOS home icon (one shot)
+on:
+  push:
+    branches:
+      - fix/hangman-ios-home-icon
+    paths:
+      - .github/workflows/generate-ios-icon.yml
+permissions:
+  contents: write
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate iOS PNG from the approved H6 artwork
+        run: |
+          python -m pip install --disable-pip-version-check pillow
+          python - <<'PY'
+          from PIL import Image
+          picture = Image.open("images/h6-icon-512.webp").convert("RGB")
+          picture.resize((180,180), Image.Resampling.LANCZOS).save(
+              "images/h6-ios-icon-180.png", optimize=True)
+          PY
+      - name: Commit the generated image
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add images/h6-ios-icon-180.png
+          git commit -m "fix(ios): export approved Halloween icon as 180px PNG"
+          git push
