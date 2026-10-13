@@ -170,3 +170,90 @@ a, a:visited { color: #fff; text-decoration: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* H2 polish: vertically balanced game and footer anchored to viewport */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+#background {
+  flex: 1 0 auto;
+}
+footer {
+  flex: none;
+  margin-top: auto;
+  padding: 14px 12px;
+}
+#formulaire {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+#formulaire br { display: none; }
+#colonne_droite { gap: 8px; }
+#colonne_droite .button { margin-top: 0; }
+
+/* Normal desktop and laptop heights: fit the whole game without clipping. */
+@media (min-width: 861px) and (min-height: 650px) {
+  body {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+  #background {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    margin: 8px auto 0;
+    padding: 12px 18px;
+  }
+  #background h1 { flex: none; font-size: clamp(2rem, 4.7vh, 2.8rem); line-height: 1.12; }
+  #jeu {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .instruction {
+    flex: none;
+    margin: 9px 10px 0;
+    padding: 9px 12px;
+    line-height: 1.25;
+    font-size: clamp(1rem, 2.3vh, 1.35rem);
+  }
+  #colonne_grille {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin: 10px 10px 0;
+    gap: 14px;
+  }
+  #colonne_gauche, #colonne_droite { padding: 12px 18px; }
+  #pendu {
+    max-height: min(100%, 34vh);
+    max-width: 100%;
+  }
+  #clavier {
+    flex: none;
+    margin: 10px 10px 4px;
+    padding: 12px 14px;
+  }
+  #lettre_grille { gap: 6px; }
+  .lettre { min-height: clamp(36px, 5.2vh, 44px); }
+  #mot {
+    padding-top: 6px;
+    line-height: 1.1;
+    font-size: clamp(1.25rem, 3.6vh, 2.2rem);
+  }
+  footer { padding: 10px 12px; font-size: 1.1rem; }
+}
+@media (max-height: 649px) {
+  body { overflow-y: auto; }
+}
+@media (max-width: 860px) {
+  #background { flex: 1 0 auto; }
+  footer { margin-top: auto; }
+}
