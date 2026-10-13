@@ -11,6 +11,8 @@ const PRECACHE = [
   "./pwa.js",
   "./manifest.webmanifest",
   "./images/h6-app-icon.svg",
+  "./images/h6-icon-192.png",
+  "./images/h6-icon-512.png",
   "./images/favicon.jpg",
   "./images/hangman-scene-exacte-reference.webp",
   "./images/pendu.png",
