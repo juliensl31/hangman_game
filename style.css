@@ -865,16 +865,12 @@ body {
 }
 .h52-word-panel,
 #clavier { border-radius: 20px; overflow: hidden; }
-.h52-word-panel::before,
-#clavier::before,
-#colonne_droite::before {
-  content: "";
-  position: absolute;
-  inset: 1px 8% auto;
-  height: 20%;
-  border-radius: 0 0 35px 35px;
-  background: linear-gradient(180deg, #ffffff11, transparent);
-  pointer-events: none;
+/* No floating glossy strips on word, keyboard or hint panels. */
+.h52-word-panel::before, .h52-word-panel::after,
+#clavier::before, #clavier::after,
+#colonne_droite::before, #colonne_droite::after {
+  content: none;
+  display: none;
 }
 #lettre_grille, .h52-word-panel #mot { position: relative; z-index: 1; }
 .lettre {
@@ -910,4 +906,39 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .lettre { transition: none; }
+}
+
+/* H5.2 : fidélité au clavier de référence, sans plaques flottantes. */
+.h52-word-panel, #clavier {
+  background: linear-gradient(180deg, #171a23f7, #0b0d15f9) padding-box,
+              linear-gradient(135deg, #ffb47580, #b05c3a74 38%, #ff872eae 85%, #9b523b76) border-box;
+  box-shadow: inset 0 1px 0 #ffffff0f, 0 0 16px #f87a281f, 0 11px 25px #0006;
+}
+.h52-word-panel::before, .h52-word-panel::after,
+#clavier::before, #clavier::after,
+#colonne_droite::before, #colonne_droite::after { content:none !important; display:none !important; }
+.lettre {
+  min-height: 55px;
+  font-size: clamp(1.72rem, 2vw, 2.02rem);
+  line-height: 1;
+  border: 1px solid #ffae6e30;
+  border-radius: 11px;
+  background: linear-gradient(180deg, #30303a, #181b24);
+  color: #fbe3c3;
+  text-shadow: 0 0 4px #ffb47030, 0 1px 0 #000b;
+  box-shadow: inset 0 1px 0 #ffffff11, inset 0 -1px 0 #0005, 0 2px 4px #0006;
+}
+.lettre::before { content:none; display:none; }
+.lettre:hover:not(.disabled) { background:linear-gradient(180deg,#f68c3a,#a9491c); }
+.lettre.disabled.correct { background:linear-gradient(180deg,#38765a,#24523f); }
+.lettre.disabled.incorrect { background:linear-gradient(180deg,#8b4c3c,#5d302d); }
+.h52-word-panel #mot {
+  color:#fbe5c6;
+  text-shadow:0 0 5px #ffb16c30, 0 1px 0 #000b;
+}
+@media (max-width:860px) {
+  .lettre { min-height: 48px; font-size: 1.4rem; }
+}
+@media (max-width:600px) {
+  .lettre { min-height:44px; font-size:1.15rem; }
 }
