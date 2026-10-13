@@ -194,7 +194,7 @@ test("H4 le changement de catégorie n'interrompt pas la partie en cours", () =>
   game.guess("BASEBALL");
   assert.equal(game.elements["#pendu"].src, "images/win.png");
   game.start();
-  assert.equal(game.elements["#indice"].textContent, "Pays européen dont la capitale est Paris.");
+  assert.equal(game.elements["#indice"].textContent, "Grand pays d’Amérique du Nord réputé pour ses érables.");
 });
 
 test("H4 compte exactement une victoire et une défaite par partie", () => {
