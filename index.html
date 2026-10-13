@@ -12,7 +12,7 @@
 
 <body>
     <div id="background" class="container">
-        <h1>HangMan</h1>
+        <h1><span>Hang</span><span class="h52-title-accent">Man</span></h1>
         <div id="jeu">
             <div class="instruction">
                 <span>Clique sur une lettre pour dévoiler le mot !</span>
@@ -35,6 +35,8 @@
             <div id="colonne_grille">
                 <div id="colonne_gauche">
                     <img id="pendu" src="images/pendu.png" alt="Illustration du pendu" />
+                    <div class="h52-scene" aria-hidden="true"></div>
+                    <div class="h52-attempts" id="h52-attempts" aria-live="polite">6 essais restants</div>
                 </div>
                 <div id="colonne_droite">
                     <div>
