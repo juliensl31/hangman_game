@@ -835,3 +835,79 @@ body {
   .h52-category { width: min(242px, 100%); min-width: min(200px, 100%); }
   .h52-ghost { width: 28px; height: 28px; flex-basis: 28px; }
 }
+
+/* H5.2 : finition métallique subtile inspirée du visuel approuvé. */
+.h52-word-panel,
+#clavier,
+#colonne_gauche,
+#colonne_droite {
+  position: relative;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(155deg, rgb(30 28 37 / 97%), rgb(10 13 22 / 97%)) padding-box,
+    linear-gradient(130deg, #ffbf8d8c 0%, #9f614a78 22%, #e36d32b3 48%, #583b3d80 70%, #f6aa78aa 100%) border-box;
+  box-shadow:
+    inset 0 1px 0 #ffffff17,
+    inset 0 -1px 0 #ffffff07,
+    0 1px 0 #0009,
+    0 11px 30px #0007,
+    0 0 24px #f578271c;
+}
+#colonne_gauche {
+  background:
+    radial-gradient(ellipse at 55% 38%, #683c3052, transparent 70%) padding-box,
+    linear-gradient(130deg, #ffbf8d8c, #9f614a78 22%, #e36d32b3 48%, #583b3d80 70%, #f6aa78aa) border-box;
+}
+#colonne_droite {
+  background:
+    linear-gradient(160deg, #27202b, #0b1018) padding-box,
+    linear-gradient(130deg, #ffbf8d8c, #9f614a78 22%, #e36d32b3 48%, #583b3d80 70%, #f6aa78aa) border-box;
+}
+.h52-word-panel,
+#clavier { border-radius: 20px; overflow: hidden; }
+.h52-word-panel::before,
+#clavier::before,
+#colonne_droite::before {
+  content: "";
+  position: absolute;
+  inset: 1px 8% auto;
+  height: 20%;
+  border-radius: 0 0 35px 35px;
+  background: linear-gradient(180deg, #ffffff11, transparent);
+  pointer-events: none;
+}
+#lettre_grille, .h52-word-panel #mot { position: relative; z-index: 1; }
+.lettre {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #ffbf8c45;
+  border-radius: 11px;
+  background: linear-gradient(180deg, #373039, #1a1d27);
+  color: #ffe7c6;
+  text-shadow: 0 0 9px #ffa86e66, 0 2px 1px #090911;
+  box-shadow: inset 0 1px 0 #ffffff22, inset 0 -1px 0 #0008, 0 3px 6px #0006;
+  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+.lettre::before {
+  content: "";
+  position: absolute;
+  inset: 1px 1px auto;
+  height: 38%;
+  border-radius: 9px 9px 17px 17px;
+  background: linear-gradient(180deg, #ffffff14, transparent);
+  pointer-events: none;
+}
+.lettre:hover:not(.disabled) {
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, #ff923e, #a94315);
+  box-shadow: inset 0 1px 0 #ffffff33, 0 0 16px #ff7c3461, 0 5px 11px #0008;
+}
+.lettre.disabled.correct { background: linear-gradient(180deg, #378562, #205742); }
+.lettre.disabled.incorrect { background: linear-gradient(180deg, #914d3b, #582b2a); }
+.h52-word-panel #mot {
+  color: #ffebd0;
+  text-shadow: 0 0 9px #ffa66b75, 0 0 21px #f5702d36, 0 2px 1px #090911;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lettre { transition: none; }
+}
