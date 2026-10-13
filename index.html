@@ -15,7 +15,19 @@
         <h1>HangMan</h1>
         <div id="jeu">
             <div class="instruction">
-                Cliquer sur une lettre pour dévoiler le mot !!
+                <span>Clique sur une lettre pour dévoiler le mot !</span>
+                <div class="game-options">
+                    <label for="categorie">Catégorie</label>
+                    <select id="categorie" aria-label="Catégorie de la prochaine partie">
+                        <option value="TOUTES">Toutes</option>
+                        <option value="SPORT">Sport</option>
+                        <option value="PAYS">Pays</option>
+                        <option value="FRUITS">Fruits</option>
+                        <option value="VOITURE">Voitures</option>
+                        <option value="HALLOWEEN">Halloween</option>
+                    </select>
+                    <span id="statistiques" aria-label="Bilan de cette session">Victoires : 0 · Défaites : 0</span>
+                </div>
             </div>
             <div id="colonne_grille">
                 <div id="colonne_gauche">
