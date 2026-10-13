@@ -327,3 +327,16 @@ test("H5.2 conserve les polices locales et la scène SVG sans changer le catalog
   assert.match(svg, /<svg /);
   assert.doesNotMatch(svg, /<script/i);
 });
+
+test("H5.2 le panneau du mot précède le clavier, qui ne contient plus le mot", () => {
+  const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
+  const css = fs.readFileSync(path.join(__dirname, "..", "style.css"), "utf8");
+  const wordPanel = html.indexOf('class="h52-word-panel"');
+  const keyboard = html.indexOf('id="clavier"');
+  assert.ok(wordPanel > 0 && keyboard > wordPanel, "le mot doit se trouver avant le clavier");
+  const wordTag = html.indexOf('id="mot"', wordPanel);
+  assert.ok(wordTag > wordPanel && wordTag < keyboard);
+  assert.match(css, /width:\s*min\(1260px/);
+  assert.match(css, /\.h52-word-panel/);
+  assert.match(css, /#colonne_gauche\[data-errors="6"\]/);
+});
